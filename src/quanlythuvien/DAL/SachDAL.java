@@ -7,12 +7,10 @@ public class SachDAL {
     public boolean openConnection() {
         try{
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String dbUrl = "localhost";
-            String DatabaseName="QLThuVien" ;
+            String dbUrl = "jdbc:sqlserver://localhost:1433; DatabaseName=QLThuVien";
             String username = "sa"; 
-            String password= "26092002";
-            String url = "jdbc:sqlserver://" +dbUrl + ":1433;DatabaseName=" + DatabaseName + ";username="+username+";password="+password+";encrypt=true;trustServerCertificate=true;";
-            con=DriverManager.getConnection(url);  
+            String password= "123";
+            con=DriverManager.getConnection(dbUrl, username, password);
             return true;
         }
         catch(Exception ex){

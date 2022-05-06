@@ -23,9 +23,16 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 import java.awt.CardLayout;
+import java.util.Vector;
 import javax.swing.JTextArea;
 
+import quanlythuvien.BLL.DocGiaBLL;
+import quanlythuvien.DTO.DocGiaDTO;
+
+
 public class TrangChuNhanVienGUI extends JFrame {
+
+	DocGiaBLL docBLL = new DocGiaBLL();
 
 	private JPanel contentPane;
 	private JTextField textField_5;
@@ -68,6 +75,29 @@ public class TrangChuNhanVienGUI extends JFrame {
 				}
 			}
 		});
+	}
+	public void loadDocGiaList(){
+		DefaultTableModel dtmDocGia = new DefaultTableModel();
+		dtmDocGia.addColumn("Tên đăng nhập");
+		dtmDocGia.addColumn("Tên độc giả");
+		dtmDocGia.addColumn("Ngày sinh");
+		dtmDocGia.addColumn("Giới tính");
+		dtmDocGia.addColumn("Email");
+		dtmDocGia.addColumn("SDT");
+		table_1.setModel(dtmDocGia);
+		Vector<DocGiaDTO> arr = new Vector<DocGiaDTO>();
+		arr = docBLL.getAllDocGia();
+		for (int i = 0; i < arr.size(); i++){
+			DocGiaDTO doc = arr.get(i);
+			String username = doc.getTenDangNhap();
+			String name = doc.getTenDocGia();
+			String bitrhday = doc.getNgaySinh();
+			String sex = doc.getGioiTinh();
+			String email = doc.getEmail();
+			String phone = doc.getSDT();
+			Object[] row = {username, name, bitrhday, sex, email, phone};
+			dtmDocGia.addRow(row);
+		}
 	}
 
 	/**
@@ -167,12 +197,12 @@ public class TrangChuNhanVienGUI extends JFrame {
 		btnNewButton_1.setBounds(82, 220, 90, 21);
 		panelQLDocGia.add(btnNewButton_1);
 		
-		JButton btnNewButton_1_1 = new JButton("Thêm");
+		JButton btnNewButton_1_1 = new JButton("Sửa");
 		btnNewButton_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnNewButton_1_1.setBounds(266, 220, 90, 21);
 		panelQLDocGia.add(btnNewButton_1_1);
 		
-		JButton btnNewButton_1_2 = new JButton("Thêm");
+		JButton btnNewButton_1_2 = new JButton("Xóa");
 		btnNewButton_1_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnNewButton_1_2.setBounds(451, 220, 90, 21);
 		panelQLDocGia.add(btnNewButton_1_2);
@@ -182,13 +212,7 @@ public class TrangChuNhanVienGUI extends JFrame {
 		panelQLDocGia.add(scrollPane_1);
 		
 		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-					"Tên đăng nhập", "Tên độc giả", "Ngày sinh", "Giới tính", "Email", "SDT"
-			}
-		));
+
 		scrollPane_1.setViewportView(table_1);
 		
 		JPanel panelThongTinDocGia = new JPanel();
@@ -627,6 +651,6 @@ public class TrangChuNhanVienGUI extends JFrame {
 				Card.validate();
 			}
 		});
-		
+		loadDocGiaList();
 	}
 }

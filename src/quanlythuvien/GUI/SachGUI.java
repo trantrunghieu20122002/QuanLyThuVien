@@ -1,18 +1,18 @@
 package quanlythuvien.GUI;
-import quanlythuvien.DTO.DocGiaDTO;
-import quanlythuvien.BLL.DocGiaBLL;
+import quanlythuvien.DTO.SachDTO;
+import quanlythuvien.BLL.SachBLL;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class DocGiaGUI extends javax.swing.JFrame {
-    DocGiaBLL empBLL = new DocGiaBLL();
+public class SachGUI extends javax.swing.JFrame {
+    SachBLL empBLL = new SachBLL();
     String findName = "";
     String ChiTietID="";
     String IdSachMuon="";
     int DeleteIndex=-1;
-     Vector<DocGiaDTO> DanhSachMuon = new Vector<DocGiaDTO>();
-    public DocGiaGUI() {
+     Vector<SachDTO> DanhSachMuon = new Vector<SachDTO>();
+    public SachGUI() {
         initComponents();
         loadBookList();
         loadDanhSachMuon(DanhSachMuon);
@@ -368,12 +368,12 @@ public class DocGiaGUI extends javax.swing.JFrame {
 
     private void BtnAddBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAddBookActionPerformed
         if(DanhSachMuon.size()<2){
-            Vector<DocGiaDTO> arr = new Vector<DocGiaDTO>();
+            Vector<SachDTO> arr = new Vector<SachDTO>();
             arr = empBLL.getAllBook();
             for(int i = 0; i < arr.size(); i++){
-                DocGiaDTO em = arr.get(i);
-                if(em.getDocGia_id().equals(ChiTietID)){
-                    if(em.getDocGia_quantity()<=0)
+                SachDTO em = arr.get(i);
+                if(em.getSach_id().equals(ChiTietID)){
+                    if(em.getSach_quantity()<=0)
                         JOptionPane.showMessageDialog(this,"Sách đã hết :((");
                     else{
                         DanhSachMuon.add(em);
@@ -403,7 +403,7 @@ public class DocGiaGUI extends javax.swing.JFrame {
         DeleteIndex = SachMuonTb.rowAtPoint(evt.getPoint());
     }//GEN-LAST:event_SachMuonTbMouseClicked
        
-    public void loadDanhSachMuon(Vector<DocGiaDTO> arr2){
+    public void loadDanhSachMuon(Vector<SachDTO> arr2){
         DefaultTableModel dtm2 = new DefaultTableModel();
         dtm2.addColumn("ID Sách");
         dtm2.addColumn("Tên Sách");
@@ -411,11 +411,11 @@ public class DocGiaGUI extends javax.swing.JFrame {
         dtm2.addColumn("Nhà Xuất Bản");
         SachMuonTb.setModel(dtm2);
         for(int i = 0; i < arr2.size(); i++){
-            DocGiaDTO em = arr2.get(i);
-            String id= em.getDocGia_id();
-            String name=em.getDocGia_name();
-            String author=em.getDocGia_author();
-            String nxb=em.getDocGia_nxb();
+            SachDTO em = arr2.get(i);
+            String id= em.getSach_id();
+            String name=em.getSach_name();
+            String author=em.getSach_author();
+            String nxb=em.getSach_nxb();
             Object[] row = {id,name,author,nxb};
             dtm2.addRow(row);
         }
@@ -428,15 +428,15 @@ public class DocGiaGUI extends javax.swing.JFrame {
         dtm.addColumn("Nhà Xuất Bản");
         dtm.addColumn("Số lượng");
         jTable1.setModel(dtm);
-        Vector<DocGiaDTO> arr = new Vector<DocGiaDTO>();
+        Vector<SachDTO> arr = new Vector<SachDTO>();
         arr = empBLL.FindBookByName(findName);
         for(int i = 0; i < arr.size(); i++){
-            DocGiaDTO em = arr.get(i);
-            String id= em.getDocGia_id();
-            String name=em.getDocGia_name();
-            String author=em.getDocGia_author();
-            String nxb=em.getDocGia_nxb();
-            int quantity=em.getDocGia_quantity();
+            SachDTO em = arr.get(i);
+            String id= em.getSach_id();
+            String name=em.getSach_name();
+            String author=em.getSach_author();
+            String nxb=em.getSach_nxb();
+            int quantity=em.getSach_quantity();
             Object[] row = {id,name,author,nxb,quantity};
             dtm.addRow(row);
         }
@@ -445,7 +445,7 @@ public class DocGiaGUI extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DocGiaGUI().setVisible(true);
+                new SachGUI().setVisible(true);
             }
         });
     }

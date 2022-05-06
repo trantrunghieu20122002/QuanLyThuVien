@@ -1,10 +1,10 @@
 package quanlythuvien.GUI;
-import quanlythuvien.BLL.DocGiaBLL;
-import quanlythuvien.DTO.DocGiaDTO;
+import quanlythuvien.BLL.SachBLL;
+import quanlythuvien.DTO.SachDTO;
 import java.util.Vector;
 
 public class ChiTietSach extends javax.swing.JFrame {
-    DocGiaBLL empBLL = new DocGiaBLL();
+    SachBLL empBLL = new SachBLL();
     String idQuery="";
     public ChiTietSach(String idSach) {
         initComponents();
@@ -13,20 +13,20 @@ public class ChiTietSach extends javax.swing.JFrame {
     }
     
     public void hienthi(){
-        Vector<DocGiaDTO> arr = new Vector<DocGiaDTO>();
+        Vector<SachDTO> arr = new Vector<SachDTO>();
         arr = empBLL.ChiTietSach(idQuery);
         System.out.print(arr.size());
         for(int i = 0; i < arr.size(); i++){
-        DocGiaDTO em = arr.get(i);
-        String id= em.getDocGia_id();
-        String dm= em.getDocGia_DM();
-        String tl= em.getDocGia_TL();
-        String name=em.getDocGia_name();
-        String author=em.getDocGia_author();        
-        String noidung=em.getDocGia_noidung();
-        String nxb=em.getDocGia_nxb();
-        String year= String.valueOf(em.getDocGia_year());
-        String quantity= String.valueOf(em.getDocGia_quantity());
+        SachDTO em = arr.get(i);
+        String id= em.getSach_id();
+        String dm= em.getSach_DM();
+        String tl= em.getSach_TL();
+        String name=em.getSach_name();
+        String author=em.getSach_author();        
+        String noidung=em.getSach_noidung();
+        String nxb=em.getSach_nxb();
+        String year= String.valueOf(em.getSach_year());
+        String quantity= String.valueOf(em.getSach_quantity());
         LbID.setText(id);
         LbName.setText(name);
         LbDM.setText(dm);

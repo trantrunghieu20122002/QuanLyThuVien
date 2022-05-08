@@ -31,6 +31,7 @@ public class DocGiaDAL {
                 String sql = "Select * from DocGia";
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);
+
                 while(rs.next()){
                     DocGiaDTO doc= new DocGiaDTO();
                     doc.setMaDocGia(rs.getString(1));
@@ -42,6 +43,7 @@ public class DocGiaDAL {
                     doc.setStatus(rs.getInt(7));
                     doc.setSoLuongMuon(rs.getInt(8));
                     arr.add(doc);}
+
             }catch (SQLException ex){
                 System.out.println(ex);
             }finally {
@@ -54,24 +56,41 @@ public class DocGiaDAL {
         boolean result = true;
         if (openConection()){
             try {
-                String sql = "Insert into DocGia values(?,?,?,?,?,?,?,?)";
+                String sql ="INSERT [dbo].[TaiKhoan] ([MaTaiKhoan], [TenDangNhap], [MatKhau], [Quyen]) VALUES (?, ?, ?, ?)";
+                //INSERT [dbo].[DocGia] ([MaDocGia], [TenDocGia], [NgaySinh], [GioiTinh], [Email], [SDT], [Status], [SoLuongMuon]) VALUES (?,?, CAST(? AS DATE), ?,?,?,?,?)";
+//                CallableStatement stmt = con.prepareCall("{call insertDocGia(?,?,?,?,?,?,?,?,?,?,?,?)");
+//                CallableStatement stmt = con.prepareCall("{call insertDocGia('DG100','DG100','van','van123',1,'Vân','2003-1-20','Nu','van123@gmail.com','0123456789',1,5)");
                 PreparedStatement stmt = con.prepareStatement(sql);
-                stmt.setString(1,doc.getMaDocGia());
-                stmt.setString(2,doc.getTenDocGia());
-                stmt.setString(3,doc.getNgaySinh());
-                stmt.setString(4,doc.getGioiTinh());
-                stmt.setString(5,doc.getEmail());
-                stmt.setString(6,doc.getSDT());
-                stmt.setString(7, String.valueOf(doc.getStatus()));
-                stmt.setString(8, String.valueOf(doc.getSoLuongMuon()));
-                if (stmt.executeUpdate() >= 1)
+
+                stmt.setString(1, doc.getMaDocGia());
+//                stmt.setString(2, doc.getMaDocGia());
+                stmt.setString(2, doc.getTenDangNhap());
+                stmt.setString(3,doc.getMatKhau());
+                stmt.setInt(4,1);
+//                stmt.setInt(5,1);
+
+//                stmt.setString(6,doc.getTenDocGia());
+//                stmt.setString(7,doc.getNgaySinh());
+//                stmt.setString(8,doc.getGioiTinh());
+//                stmt.setString(9,doc.getEmail());
+//                stmt.setString(10,doc.getSDT());
+//                stmt.setInt(11, doc.getStatus());
+//                stmt.setInt(12, 5);
+
+                if (stmt.executeUpdate() >= 1 ){
                     result = true;
+                    System.out.println("Complete");
+                }
+
             }catch (SQLException ex){
                 System.out.println(ex);
             }finally {
                 closeConection();}}
         return result;
     }
+//    public boolean deleteDocGia(DocGiaDTO doc){
+//
+//    }
     public boolean hasMaDocGia(String id){
         boolean result = false;
         if (openConection()){

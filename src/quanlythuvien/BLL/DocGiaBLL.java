@@ -12,8 +12,15 @@ public class DocGiaBLL {
     public String addDocGia(DocGiaDTO doc){
         if (docgiaDAL.hasMaDocGia(doc.getMaDocGia()))
             return "Mã độc giả đã tồn tại";
-        if (docgiaDAL.addDocGia(doc))
+        if (docgiaDAL.addDocGia(doc)){
+            System.out.println(doc);
             return "Thêm thành công";
+        }
         return "Thêm thất bại";
     }
+//    public String deleteDocGia(DocGiaDTO doc){
+//        if (!docgiaDAL.hasMaDocGia(doc.getMaDocGia()))
+//            return "Mã độc giả không tồn tại";
+//
+//    }
 }

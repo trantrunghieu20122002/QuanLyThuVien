@@ -1,21 +1,34 @@
 package quanlythuvien.GUI;
 import quanlythuvien.DTO.SachDTO;
+import quanlythuvien.DTO.DocGiaDTO;
 import quanlythuvien.BLL.SachBLL;
+import quanlythuvien.BLL.DocGiaBLL;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import quanlythuvien.BLL.PhieuMuonBLL;
 
 public class SachGUI extends javax.swing.JFrame {
-    SachBLL empBLL = new SachBLL();
+    // ======================================================    
     String findName = "";
     String ChiTietID="";
     String IdSachMuon="";
+    String IdUser ="DG001";
+    int NgayMuon=7;
     int DeleteIndex=-1;
+    // ======================================================      
+    SachBLL empBLL = new SachBLL();
+    DocGiaBLL DocGia = new DocGiaBLL();
+    PhieuMuonBLL PhieuMuon = new PhieuMuonBLL();
+    DocGiaDTO user = DocGia.getIdDocGia(IdUser);
      Vector<SachDTO> DanhSachMuon = new Vector<SachDTO>();
+    // ======================================================      
     public SachGUI() {
         initComponents();
+        SetSoLuongMuon();
         loadBookList();
         loadDanhSachMuon(DanhSachMuon);
+        jLabel7.setText(user.getTenDocGia());
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -24,6 +37,8 @@ public class SachGUI extends javax.swing.JFrame {
         PanelTop = new javax.swing.JPanel();
         TitleText = new javax.swing.JLabel();
         LogOut = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         TPGuide = new javax.swing.JTabbedPane();
         PanelBook = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -31,7 +46,6 @@ public class SachGUI extends javax.swing.JFrame {
         BtnChiTiet = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         FindTextField = new javax.swing.JTextField();
-        FindButton = new javax.swing.JButton();
         BtnAddBook = new javax.swing.JButton();
         PanelListBook = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -42,8 +56,8 @@ public class SachGUI extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         BtnDeleteBook = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton5 = new javax.swing.JButton();
+        ComboBoxDate = new javax.swing.JComboBox<>();
+        BtnMuon = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         PanelGuide = new javax.swing.JPanel();
         PGuideText = new javax.swing.JPanel();
@@ -55,7 +69,7 @@ public class SachGUI extends javax.swing.JFrame {
         PanelTop.setBackground(new java.awt.Color(255, 204, 204));
 
         TitleText.setFont(new java.awt.Font("MingLiU", 1, 24)); // NOI18N
-        TitleText.setText("                            SGU LIBRARY");
+        TitleText.setText("              SGU LIBRARY");
 
         LogOut.setBackground(new java.awt.Color(204, 255, 204));
         LogOut.setText("Đăng Xuất");
@@ -66,11 +80,21 @@ public class SachGUI extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
+        jLabel7.setText("jLabel7");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel8.setText("Xin Chào :");
+
         javax.swing.GroupLayout PanelTopLayout = new javax.swing.GroupLayout(PanelTop);
         PanelTop.setLayout(PanelTopLayout);
         PanelTopLayout.setHorizontalGroup(
             PanelTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelTopLayout.createSequentialGroup()
+                .addComponent(jLabel8)
+                .addGap(4, 4, 4)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TitleText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -84,7 +108,11 @@ public class SachGUI extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelTopLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(LogOut))
+                .addGroup(PanelTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(LogOut, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         TPGuide.setTabPlacement(javax.swing.JTabbedPane.LEFT);
@@ -115,10 +143,10 @@ public class SachGUI extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Tìm Kiếm");
 
-        FindButton.setText("jButton2");
-        FindButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FindButtonActionPerformed(evt);
+        FindTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        FindTextField.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                FindTextFieldCaretUpdate(evt);
             }
         });
 
@@ -149,23 +177,19 @@ public class SachGUI extends javax.swing.JFrame {
                         .addGap(35, 35, 35)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(FindTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(FindButton, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addComponent(FindTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         PanelBookLayout.setVerticalGroup(
             PanelBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelBookLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PanelBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(FindTextField)
-                        .addComponent(FindButton))
                     .addGroup(PanelBookLayout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
+                        .addGap(0, 7, Short.MAX_VALUE))
+                    .addComponent(FindTextField))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
                 .addGroup(PanelBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -204,7 +228,7 @@ public class SachGUI extends javax.swing.JFrame {
         jLabel4.setText("0");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel5.setText("/ 5");
+        jLabel5.setText("/ 3");
 
         BtnDeleteBook.setBackground(new java.awt.Color(255, 204, 153));
         BtnDeleteBook.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -217,15 +241,25 @@ public class SachGUI extends javax.swing.JFrame {
         });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel6.setText("Chọn ngày hẹn trả");
+        jLabel6.setText("Chọn số ngày mượn");
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " 7  Ngày", "14 Ngày", "30 Ngày", " " }));
+        ComboBoxDate.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        ComboBoxDate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "7", "14", "30", " " }));
+        ComboBoxDate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboBoxDateActionPerformed(evt);
+            }
+        });
 
-        jButton5.setBackground(new java.awt.Color(255, 204, 153));
-        jButton5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton5.setText("Xác nhận mượn");
-        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BtnMuon.setBackground(new java.awt.Color(255, 204, 153));
+        BtnMuon.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        BtnMuon.setText("Xác nhận mượn");
+        BtnMuon.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BtnMuon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnMuonActionPerformed(evt);
+            }
+        });
 
         jSeparator1.setBackground(new java.awt.Color(210, 209, 209));
 
@@ -237,7 +271,7 @@ public class SachGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(PanelListBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
                     .addGroup(PanelListBookLayout.createSequentialGroup()
                         .addGroup(PanelListBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -248,12 +282,12 @@ public class SachGUI extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(PanelListBookLayout.createSequentialGroup()
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ComboBoxDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 285, Short.MAX_VALUE)
                         .addGroup(PanelListBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BtnMuon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(BtnDeleteBook, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
@@ -275,8 +309,8 @@ public class SachGUI extends javax.swing.JFrame {
                 .addGroup(PanelListBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelListBookLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(ComboBoxDate, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BtnMuon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24))
         );
 
@@ -293,7 +327,7 @@ public class SachGUI extends javax.swing.JFrame {
         PGuideText.setLayout(PGuideTextLayout);
         PGuideTextLayout.setHorizontalGroup(
             PGuideTextLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(LGuideTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 690, Short.MAX_VALUE)
+            .addComponent(LGuideTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 712, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PGuideTextLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(textArea1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -327,8 +361,8 @@ public class SachGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(PanelTop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(TPGuide)
+            .addComponent(PanelTop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -340,17 +374,14 @@ public class SachGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private void SetSoLuongMuon(){
+        jLabel4.setText(String.valueOf(user.getSoLuongMuon()));
+    }
     private void LogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutActionPerformed
         LoginGUI lg=new LoginGUI();
         lg.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_LogOutActionPerformed
-
-    private void FindButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FindButtonActionPerformed
-        findName = FindTextField.getText();
-        loadBookList();
-    }//GEN-LAST:event_FindButtonActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         int position = jTable1.rowAtPoint(evt.getPoint());
@@ -365,9 +396,9 @@ public class SachGUI extends javax.swing.JFrame {
             cts.setVisible(true);
         }
     }//GEN-LAST:event_BtnChiTietActionPerformed
-
+    
     private void BtnAddBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAddBookActionPerformed
-        if(DanhSachMuon.size()<2){
+        if(DanhSachMuon.size()<3){
             Vector<SachDTO> arr = new Vector<SachDTO>();
             arr = empBLL.getAllBook();
             for(int i = 0; i < arr.size(); i++){
@@ -375,6 +406,8 @@ public class SachGUI extends javax.swing.JFrame {
                 if(em.getSach_id().equals(ChiTietID)){
                     if(em.getSach_quantity()<=0)
                         JOptionPane.showMessageDialog(this,"Sách đã hết :((");
+                    else if(!KiemTraSach(em.getSach_id()))
+                        JOptionPane.showMessageDialog(this,"Sách đã tồn tại trong danh sách");
                     else{
                         DanhSachMuon.add(em);
                         loadDanhSachMuon(DanhSachMuon);
@@ -386,9 +419,18 @@ public class SachGUI extends javax.swing.JFrame {
         else{
             JOptionPane.showMessageDialog(this,"Danh sách mượn đã đầy không thể mượn thêm");
         }
-        
     }//GEN-LAST:event_BtnAddBookActionPerformed
-
+    
+    private boolean KiemTraSach(String id){
+        boolean result=true;
+        for(int i = 0; i < DanhSachMuon.size(); i++){
+            SachDTO em = DanhSachMuon.get(i);
+            if(em.getSach_id().equals(id))
+                result=false;
+        }
+        return result;
+    }
+    
     private void BtnDeleteBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDeleteBookActionPerformed
         if(DeleteIndex==-1)
             JOptionPane.showMessageDialog(this,"Vui lòng chọn sách cần xóa");
@@ -402,6 +444,35 @@ public class SachGUI extends javax.swing.JFrame {
     private void SachMuonTbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SachMuonTbMouseClicked
         DeleteIndex = SachMuonTb.rowAtPoint(evt.getPoint());
     }//GEN-LAST:event_SachMuonTbMouseClicked
+
+    private void BtnMuonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnMuonActionPerformed
+        if(DanhSachMuon.size()+user.getSoLuongMuon()>3)
+            JOptionPane.showMessageDialog(this,"Bạn chỉ có thể mượn tối đa 3 quyển sách");
+        else if(DanhSachMuon.size()==0)
+            JOptionPane.showMessageDialog(this,"Danh sách mượn hiện đang rỗng");
+        else{
+            boolean kt=PhieuMuon.InsertPhieuMuon(DanhSachMuon, user, NgayMuon);
+            if(kt==true){
+                JOptionPane.showMessageDialog(this,"Mượn thành công !!!\nVui lòng đến nhận sách trong thời gian sớm nhất");
+                DanhSachMuon.clear();
+                loadDanhSachMuon(DanhSachMuon);
+                user=DocGia.getIdDocGia(IdUser);
+                SetSoLuongMuon();
+            }
+            else
+                JOptionPane.showMessageDialog(this,"Đã xảy ra lỗi ! xin vui lòng thử lại");
+        }
+    }//GEN-LAST:event_BtnMuonActionPerformed
+
+    private void ComboBoxDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxDateActionPerformed
+        if (ComboBoxDate.getSelectedIndex() != -1)
+            NgayMuon=Integer.parseInt(ComboBoxDate.getItemAt(ComboBoxDate.getSelectedIndex()));
+    }//GEN-LAST:event_ComboBoxDateActionPerformed
+
+    private void FindTextFieldCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_FindTextFieldCaretUpdate
+        findName = FindTextField.getText();
+        loadBookList();
+    }//GEN-LAST:event_FindTextFieldCaretUpdate
        
     public void loadDanhSachMuon(Vector<SachDTO> arr2){
         DefaultTableModel dtm2 = new DefaultTableModel();
@@ -454,7 +525,8 @@ public class SachGUI extends javax.swing.JFrame {
     private javax.swing.JButton BtnAddBook;
     private javax.swing.JButton BtnChiTiet;
     private javax.swing.JButton BtnDeleteBook;
-    private javax.swing.JButton FindButton;
+    private javax.swing.JButton BtnMuon;
+    private javax.swing.JComboBox<String> ComboBoxDate;
     private javax.swing.JTextField FindTextField;
     private javax.swing.JLabel LGuideTitle;
     private javax.swing.JButton LogOut;
@@ -466,14 +538,14 @@ public class SachGUI extends javax.swing.JFrame {
     private javax.swing.JTable SachMuonTb;
     private javax.swing.JTabbedPane TPGuide;
     private javax.swing.JLabel TitleText;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;

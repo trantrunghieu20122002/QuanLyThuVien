@@ -8,9 +8,12 @@ public class DocGiaDAL {
     public boolean openConection(){
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String dbUrl = "jdbc:sqlserver://localhost:1433; DatabaseName = QLThuVien";
-            String username = "sa"; String password= "123";
-            con = DriverManager.getConnection(dbUrl, username, password);
+            String dbUrl = "localhost";
+            String DatabaseName="QLThuVien" ;
+            String username = "sa"; 
+            String password= "123";
+            String url = "jdbc:sqlserver://" +dbUrl + ":1433;DatabaseName=" + DatabaseName + ";username="+username+";password="+password+";encrypt=true;trustServerCertificate=true;";
+            con=DriverManager.getConnection(url);  
             return true;
         }catch (Exception ex){
             System.out.println(ex);
@@ -45,7 +48,7 @@ public class DocGiaDAL {
                     arr.add(doc);}
 
             }catch (SQLException ex){
-                System.out.println(ex);
+                System.out.println(ex+"Sai ở đây 1");
             }finally {
                 closeConection();
             }}
@@ -81,9 +84,10 @@ public class DocGiaDAL {
                     result = true;
                     System.out.println("Complete");
                 }
-
+                else
+                    result = false;
             }catch (SQLException ex){
-                System.out.println(ex);
+                System.out.println(ex+"Sai ở đây 2");
             }finally {
                 closeConection();}}
         return result;
@@ -100,9 +104,37 @@ public class DocGiaDAL {
                 ResultSet rs = stmt.executeQuery(sql);
                 result = rs.next();
             }catch (SQLException ex){
-                System.out.println(ex);
+                System.out.println(ex+"Sai ở đây 3");
             }finally {
                 closeConection();}}
         return result;
     }
+
+    public DocGiaDTO getIdDocGia(String id){
+        DocGiaDTO doc= new DocGiaDTO();
+        if(openConection()){
+            try {
+                String sql = "Select * from DocGia where MaDocGia = '"+id+"'";
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+
+                while(rs.next()){
+                    doc.setMaDocGia(rs.getString(1));
+                    doc.setTenDocGia(rs.getString(2));
+                    doc.setNgaySinh(rs.getString(3));
+                    doc.setGioiTinh(rs.getString(4));
+                    doc.setEmail(rs.getString(5));
+                    doc.setSDT(rs.getString(6));
+                    doc.setStatus(rs.getInt(7));
+                    doc.setSoLuongMuon(rs.getInt(8));
+                    }
+
+            }catch (SQLException ex){
+                System.out.println(ex+"Sai ở đây 4");
+            }finally {
+                closeConection();
+            }}
+            return doc;
+    }
+
 }

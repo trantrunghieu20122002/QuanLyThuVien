@@ -21,11 +21,14 @@ import java.util.Vector;
 import quanlythuvien.BLL.DocGiaBLL;
 import quanlythuvien.DAL.DocGiaDAL;
 import quanlythuvien.DTO.DocGiaDTO;
+import quanlythuvien.BLL.SachBLL;
+import quanlythuvien.DTO.*;
 
 
 public class TrangChuNhanVienGUI extends JFrame {
 
 	DocGiaBLL docBLL = new DocGiaBLL();
+        SachBLL sachBLL = new SachBLL();
 
 	private JPanel contentPane;
 	private JTextField textField_5;
@@ -94,6 +97,36 @@ public class TrangChuNhanVienGUI extends JFrame {
 			dtmDocGia.addRow(row);
 		}
 	}
+        
+        public void loadBookList() {
+        DefaultTableModel dtm = new DefaultTableModel();
+        dtm.addColumn("Mã Sách");
+        dtm.addColumn("Tên Sách");
+        dtm.addColumn("Mã DM");
+        dtm.addColumn("Mã TL");
+        dtm.addColumn("Tác Giả");
+        dtm.addColumn("Nhà Xuất Bản");
+        dtm.addColumn("Năm XB");
+        dtm.addColumn("Số lượng");
+        dtm.addColumn("Tóm tắt");
+        table_2.setModel(dtm);
+        Vector<SachDTO> arr = new Vector<SachDTO>();
+        arr = sachBLL.getAllBook();
+        for (int i = 0; i < arr.size(); i++) {
+            SachDTO book = arr.get(i);
+            String id = book.getSach_id();
+            String name = book.getSach_name();
+            String dm = book.getSach_DM();
+            String tl = book.getSach_TL();
+            String author = book.getSach_author();
+            String nxb = book.getSach_nxb();
+            int year = book.getSach_year();
+            int quantity = book.getSach_quantity();
+            String sumary = book.getSach_noidung();
+            Object[] row = {id, name, dm, tl, author, nxb, year, quantity, sumary};
+            dtm.addRow(row);
+        }
+    }
 
 	/**
 	 * Create the frame.
@@ -701,5 +734,6 @@ public class TrangChuNhanVienGUI extends JFrame {
 			}
 		});
 		loadDocGiaList();
+                loadBookList();
 	}
 }

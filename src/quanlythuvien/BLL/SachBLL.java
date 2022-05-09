@@ -14,4 +14,14 @@ public class SachBLL {
     public Vector<SachDTO> ChiTietSach(String id){
         return empDAL.ChiTietSach(id);
     }
+    
+    public String addBook(SachDTO book) {
+        String s = null;
+        if (empDAL.hasBookId(book.getSach_id())) {
+            s = "Mã sách đã tồn tại";
+        } else {
+            s = "Thêm thành công";
+        }
+        return s;
+    }
 }

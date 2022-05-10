@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Cursor;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.CardLayout;
 import java.util.Vector;
 
@@ -204,11 +205,14 @@ public class TrangChuNhanVienGUI extends JFrame {
 						DocGiaDTO doc = new DocGiaDTO();
 						doc.setMaDocGia(txtMaDocGia.getText());
 						doc.setTenDocGia(txtTenDocGia.getText());
+						doc.setTenDangNhap(txtTaiKhoan.getText());
+						doc.setMatKhau(txtMatKhau.getText());
 						if(rdbtnNam.isSelected()){
 							doc.setGioiTinh(rdbtnNam.getText());
 						}else doc.setGioiTinh(rdbtnNu.getText());
 						doc.setSDT(txtSDT.getText());
 						doc.setNgaySinh(txtNgaySinh.getText());
+						doc.setEmail(txtEmail.getText());
 						doc.setStatus(0);
 						doc.setSoLuongMuon(5);
 						JOptionPane.showMessageDialog(null,docBLL.addDocGia(doc));
@@ -232,7 +236,18 @@ public class TrangChuNhanVienGUI extends JFrame {
 		btnNewButton_1_2.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				try {
+					if (txtMaDocGia.getText().trim().equals(""))
+						JOptionPane.showMessageDialog(null,"Vui lòng nhập mã độc giả để xóa");
+					else{
+						DocGiaDTO doc = new DocGiaDTO();
+						doc.setMaDocGia(txtMaDocGia.getText());
+						JOptionPane.showMessageDialog(null,docBLL.deleteDocGia(doc));
+						loadDocGiaList();
+					}
+				}catch (NumberFormatException ex){
+					JOptionPane.showMessageDialog(null,"Thông tin không hợp lệ");
+				}
 			}
 		});
 		
@@ -241,6 +256,19 @@ public class TrangChuNhanVienGUI extends JFrame {
 		panelQLDocGia.add(scrollPane_1);
 		
 		table_1 = new JTable();
+		table_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int i = table_1.getSelectedRow();
+				TableModel model = table_1.getModel();
+				txtMaDocGia.setText(model.getValueAt(i,0).toString());
+				txtTenDocGia.setText(model.getValueAt(i,1).toString());
+				txtNgaySinh.setText(model.getValueAt(i,2).toString());
+				txtEmail.setText(model.getValueAt(i,4).toString());
+				txtSDT.setText(model.getValueAt(i,5).toString());
+
+			}
+		});
 
 		scrollPane_1.setViewportView(table_1);
 		

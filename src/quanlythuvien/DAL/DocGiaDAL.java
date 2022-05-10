@@ -10,10 +10,11 @@ public class DocGiaDAL {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             String dbUrl = "localhost";
             String DatabaseName="QLThuVien" ;
-            String username = "sa";
+            String username = "sa"; 
             String password= "123";
             String url = "jdbc:sqlserver://" +dbUrl + ":1433;DatabaseName=" + DatabaseName + ";username="+username+";password="+password+";encrypt=true;trustServerCertificate=true;";
-            con = DriverManager.getConnection(url);
+            con=DriverManager.getConnection(url);  
+
             return true;
         }catch (Exception ex){
             System.out.println(ex);
@@ -48,7 +49,7 @@ public class DocGiaDAL {
                     arr.add(doc);}
 
             }catch (SQLException ex){
-                System.out.println(ex);
+                System.out.println(ex+"Sai ở đây 1");
             }finally {
                 closeConection();
             }}
@@ -80,9 +81,10 @@ public class DocGiaDAL {
                     result = true;
                     System.out.println("Complete");
                 }
-
+                else
+                    result = false;
             }catch (SQLException ex){
-                System.out.println(ex);
+                System.out.println(ex+"Sai ở đây 2");
             }finally {
                 closeConection();}}
         return result;
@@ -97,11 +99,12 @@ public class DocGiaDAL {
                 ResultSet rs = stmt.executeQuery(sql);
                 result = rs.next();
             }catch (SQLException ex){
-                System.out.println(ex);
+                System.out.println(ex+"Sai ở đây 3");
             }finally {
                 closeConection();}}
         return result;
     }
+
 
     public boolean hasbtMaDocGia(String id){
         boolean result = true;
@@ -124,11 +127,9 @@ public class DocGiaDAL {
             try {
                 DocGiaDTO doc = new DocGiaDTO();
                 String id = doc.getMaDocGia();
-                String sql = "Delete from [dbo].[DocGia] where [MaDocGia] = "+id
-                        + "\nDelete from [dbo].[TaiKhoan] where [MaTaiKhoan] = " + id;
+                String sql = "Delete from [dbo].[DocGia] where [MaDocGia] = '"+id+"'";
+//                        + "\nDelete from [dbo].[TaiKhoan] where [MaTaiKhoan] = '" +id+"'";
                 PreparedStatement stmt = con.prepareStatement(sql);
-                stmt.setString(1,doc.getMaDocGia());
-                stmt.setString(2,doc.getMaDocGia());
 //                if (stmt.executeUpdate() >= 1){
 //                    result = true;
 //                    System.out.println("Complete");
@@ -140,6 +141,33 @@ public class DocGiaDAL {
             }finally {
                 closeConection();}}
         return result;
+    }
+
+    public DocGiaDTO getIdDocGia(String id){
+        DocGiaDTO doc= new DocGiaDTO();
+        if(openConection()){
+            try {
+                String sql = "Select * from DocGia where MaDocGia = '"+id+"'";
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+
+                while(rs.next()){
+                    doc.setMaDocGia(rs.getString(1));
+                    doc.setTenDocGia(rs.getString(2));
+                    doc.setNgaySinh(rs.getString(3));
+                    doc.setGioiTinh(rs.getString(4));
+                    doc.setEmail(rs.getString(5));
+                    doc.setSDT(rs.getString(6));
+                    doc.setStatus(rs.getInt(7));
+                    doc.setSoLuongMuon(rs.getInt(8));
+                    }
+
+            }catch (SQLException ex){
+                System.out.println(ex+"Sai ở đây 4");
+            }finally {
+                closeConection();
+            }}
+            return doc;
     }
 }
 

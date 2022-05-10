@@ -21,14 +21,15 @@ public class DocGiaBLL {
     }
 
 
-    public String deleteDocGia(DocGiaDTO doc) {
-        if (docgiaDAL.hasMaDocGia(doc.getMaDocGia()))
-            return "Mã độc giả không tồn tại";
-        if (docgiaDAL.deleteDocGia()) {
+    public String deleteDocGia(String id) {
+//        if (docgiaDAL.hasMaDocGia(doc.getMaDocGia()))
+//            return "Mã độc giả không tồn tại";
+        docgiaDAL.deleteDocGia(id);
             return "Xóa thành công";
+
         }
-        return  "Xóa thất bại";
-    }
+//        return  "Xóa thất bại";
+//    }
 
     
     public DocGiaDTO getIdDocGia(String id){

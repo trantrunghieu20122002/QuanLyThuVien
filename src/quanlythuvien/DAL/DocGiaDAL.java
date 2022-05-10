@@ -94,10 +94,10 @@ public class DocGiaDAL {
         boolean result = false;
         if (openConection()){
             try {
-                String sql = "Select * from DocGia where MaDocGia=" + id;
+                String sql = "Select * from DocGia where MaDocGia= '" + id+"'";
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);
-                result = rs.next();
+//                result = rs.next();
             }catch (SQLException ex){
                 System.out.println(ex+"Sai ở đây 3");
             }finally {
@@ -121,23 +121,23 @@ public class DocGiaDAL {
         return result;
     }
 
-    public boolean deleteDocGia() {
+    public boolean deleteDocGia(String id) {
         boolean result = true;
         if (openConection()){
             try {
                 DocGiaDTO doc = new DocGiaDTO();
-                String id = doc.getMaDocGia();
-                String sql = "Delete from [dbo].[DocGia] where [MaDocGia] = '"+id+"'";
+                String sql = "Delete from [dbo].[DocGia] where MaDocGia = '"+id+"'";
 //                        + "\nDelete from [dbo].[TaiKhoan] where [MaTaiKhoan] = '" +id+"'";
-                PreparedStatement stmt = con.prepareStatement(sql);
+                Statement stmt = con.createStatement();
 //                if (stmt.executeUpdate() >= 1){
 //                    result = true;
 //                    System.out.println("Complete");
 //                }
-                stmt.executeUpdate();
+                stmt.executeUpdate(sql);
 
             }catch (SQLException ex){
                 System.out.println(ex);
+                System.out.println("aaaaaa");
             }finally {
                 closeConection();}}
         return result;

@@ -59,6 +59,7 @@ public class TrangChuNhanVienGUI extends JFrame {
 	private JTextField textField_19;
 	private JTextField txtTaiKhoan;
 	private JTextField txtMatKhau;
+	public  String idDocGia;
 
 	/**
 	 * Launch the application.
@@ -275,7 +276,7 @@ public class TrangChuNhanVienGUI extends JFrame {
 					else{
 						DocGiaDTO doc = new DocGiaDTO();
 						doc.setMaDocGia(txtMaDocGia.getText());
-						JOptionPane.showMessageDialog(null,docBLL.deleteDocGia(doc));
+						JOptionPane.showMessageDialog(null,docBLL.deleteDocGia(idDocGia));
 						loadDocGiaList();
 					}
 				}catch (NumberFormatException ex){
@@ -299,6 +300,7 @@ public class TrangChuNhanVienGUI extends JFrame {
 				txtNgaySinh.setText(model.getValueAt(i,2).toString());
 				txtEmail.setText(model.getValueAt(i,4).toString());
 				txtSDT.setText(model.getValueAt(i,5).toString());
+				idDocGia = txtMaDocGia.getText();
 
 			}
 		});

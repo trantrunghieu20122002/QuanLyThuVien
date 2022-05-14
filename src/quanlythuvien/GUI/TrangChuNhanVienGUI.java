@@ -70,6 +70,8 @@ public class TrangChuNhanVienGUI extends JFrame {
 	private JTextField txtMaTheLoai;
 	private JTextField txtTenTheLoai;
 	private JTable tableTheLoai;
+	private JTextField txtTaiKhoan;
+	private JTextField txtMatKhau;
 
 	/**
 	 * Launch the application.
@@ -193,22 +195,22 @@ public class TrangChuNhanVienGUI extends JFrame {
 
 		JLabel lblNewLabel_2 = new JLabel("Tên độc giả:");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2.setBounds(59, 68, 90, 35);
+		lblNewLabel_2.setBounds(59, 135, 90, 35);
 		panelQLDocGia.add(lblNewLabel_2);
 
 		JLabel lblNewLabel_2_1 = new JLabel("Giới tính:");
 		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2_1.setBounds(59, 125, 90, 35);
+		lblNewLabel_2_1.setBounds(59, 192, 90, 35);
 		panelQLDocGia.add(lblNewLabel_2_1);
 
 		JLabel lblNewLabel_2_1_1 = new JLabel("Email:");
 		lblNewLabel_2_1_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2_1_1.setBounds(386, 125, 90, 35);
+		lblNewLabel_2_1_1.setBounds(386, 192, 90, 35);
 		panelQLDocGia.add(lblNewLabel_2_1_1);
 
 		JLabel lblNewLabel_2_2 = new JLabel("Ngày sinh::");
 		lblNewLabel_2_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel_2_2.setBounds(386, 68, 90, 35);
+		lblNewLabel_2_2.setBounds(386, 135, 90, 35);
 		panelQLDocGia.add(lblNewLabel_2_2);
 
 		JLabel lblNewLabel_1_1 = new JLabel("Số điện thoại:");
@@ -217,19 +219,18 @@ public class TrangChuNhanVienGUI extends JFrame {
 		panelQLDocGia.add(lblNewLabel_1_1);
 
 				txtMaDocGia = new JTextField();
-				txtMaDocGia.setEditable(false);
 				txtMaDocGia.setColumns(10);
 				txtMaDocGia.setBounds(152, 20, 181, 19);
 				panelQLDocGia.add(txtMaDocGia);
 
 						txtTenDocGia = new JTextField();
 						txtTenDocGia.setColumns(10);
-						txtTenDocGia.setBounds(152, 77, 181, 19);
+						txtTenDocGia.setBounds(152, 144, 181, 19);
 						panelQLDocGia.add(txtTenDocGia);
 
 						txtNgaySinh = new JTextField();
 						txtNgaySinh.setColumns(10);
-						txtNgaySinh.setBounds(486, 77, 181, 19);
+						txtNgaySinh.setBounds(486, 144, 181, 19);
 						panelQLDocGia.add(txtNgaySinh);
 
 						txtSDT = new JTextField();
@@ -239,22 +240,22 @@ public class TrangChuNhanVienGUI extends JFrame {
 
 						txtEmail = new JTextField();
 						txtEmail.setColumns(10);
-						txtEmail.setBounds(486, 134, 181, 19);
+						txtEmail.setBounds(486, 201, 181, 19);
 						panelQLDocGia.add(txtEmail);
 
 						JRadioButton rdbtnNam = new JRadioButton("Nam");
 						rdbtnNam.setFont(new Font("Tahoma", Font.PLAIN, 13));
-						rdbtnNam.setBounds(155, 133, 62, 21);
+						rdbtnNam.setBounds(155, 200, 62, 21);
 						panelQLDocGia.add(rdbtnNam);
 
 						JRadioButton rdbtnNu = new JRadioButton("Nữ");
 						rdbtnNu.setFont(new Font("Tahoma", Font.PLAIN, 13));
-						rdbtnNu.setBounds(219, 133, 103, 21);
+						rdbtnNu.setBounds(219, 200, 103, 21);
 						panelQLDocGia.add(rdbtnNu);
 
 						JButton btnThemDocGia = new JButton("Thêm");
 						btnThemDocGia.setFont(new Font("Tahoma", Font.PLAIN, 13));
-						btnThemDocGia.setBounds(82, 180, 90, 21);
+						btnThemDocGia.setBounds(82, 247, 90, 21);
 						panelQLDocGia.add(btnThemDocGia);
 						btnThemDocGia.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
@@ -311,12 +312,12 @@ public class TrangChuNhanVienGUI extends JFrame {
 							}
 						});
 						btnSuaDocGia.setFont(new Font("Tahoma", Font.PLAIN, 13));
-						btnSuaDocGia.setBounds(266, 180, 90, 21);
+						btnSuaDocGia.setBounds(266, 247, 90, 21);
 						panelQLDocGia.add(btnSuaDocGia);
 
 						JButton btnXoaDocGia = new JButton("Xóa");
 						btnXoaDocGia.setFont(new Font("Tahoma", Font.PLAIN, 13));
-						btnXoaDocGia.setBounds(451, 180, 90, 21);
+						btnXoaDocGia.setBounds(451, 247, 90, 21);
 						panelQLDocGia.add(btnXoaDocGia);
 						btnXoaDocGia.addActionListener(new ActionListener() {
 							@Override
@@ -337,7 +338,7 @@ public class TrangChuNhanVienGUI extends JFrame {
 						});
 
 						JScrollPane scrollPane_1 = new JScrollPane();
-						scrollPane_1.setBounds(0, 226, 760, 249);
+						scrollPane_1.setBounds(0, 278, 760, 197);
 						panelQLDocGia.add(scrollPane_1);
 
 						tableDocGia = new JTable();
@@ -356,6 +357,26 @@ public class TrangChuNhanVienGUI extends JFrame {
 						});
 
 								scrollPane_1.setViewportView(tableDocGia);
+								
+								JLabel labeltaikhoan = new JLabel("Tài khoản: ");
+								labeltaikhoan.setFont(new Font("Tahoma", Font.PLAIN, 13));
+								labeltaikhoan.setBounds(59, 76, 90, 35);
+								panelQLDocGia.add(labeltaikhoan);
+								
+								txtTaiKhoan = new JTextField();
+								txtTaiKhoan.setColumns(10);
+								txtTaiKhoan.setBounds(152, 85, 181, 19);
+								panelQLDocGia.add(txtTaiKhoan);
+								
+								JLabel lblNewLabel_2_2_1 = new JLabel("Ngày sinh::");
+								lblNewLabel_2_2_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+								lblNewLabel_2_2_1.setBounds(386, 76, 90, 35);
+								panelQLDocGia.add(lblNewLabel_2_2_1);
+								
+								txtMatKhau = new JTextField();
+								txtMatKhau.setColumns(10);
+								txtMatKhau.setBounds(486, 85, 181, 19);
+								panelQLDocGia.add(txtMatKhau);
 
 		JPanel panelThongTinDocGia = new JPanel();
 		panelThongTinDocGia.setBounds(0, 25, 770, 480);

@@ -134,23 +134,24 @@ public class DocGiaDAL<result> {
         boolean result = true;
         if (openConection()){
             try {
-                String sql ="INSERT [dbo].[TaiKhoan] ([MaTaiKhoan], [TenDangNhap], [MatKhau], [Quyen]) VALUES (?, ?, ?, ?)\n"+"INSERT [dbo].[DocGia] ([MaDocGia], [TenDocGia], [NgaySinh], [GioiTinh], [Email], [SDT], [Status], [SoLuongMuon]) VALUES (?,?, CAST(? AS DATE), ?,?,?,?,?)";
+                int i = 3;
+                String idDocGia = "DG00" + i;
+                String sql ="INSERT [dbo].[TaiKhoan] ([MaTaiKhoan], [TenDangNhap], [MatKhau], [Quyen]) VALUES ("+ idDocGia+"?, ?, ?, ?)\n"+"INSERT [dbo].[DocGia] ([MaDocGia], [TenDocGia], [NgaySinh], [GioiTinh], [Email], [SDT], [Status], [SoLuongMuon]) VALUES ("+ idDocGia+",?, CAST(? AS DATE), ?,?,?,?,?)";
                 PreparedStatement stmt = con.prepareStatement(sql);
-                stmt.setString(1, doc.getMaDocGia());
-                stmt.setString(2, doc.getTenDangNhap());
-                stmt.setString(3,doc.getMatKhau());
-                stmt.setInt(4,1);
+                stmt.setString(1, doc.getTenDangNhap());
+                stmt.setString(2,doc.getMatKhau());
+                stmt.setInt(3,1);
 
-                stmt.setString(5,doc.getMaDocGia());
-                stmt.setString(6,doc.getTenDocGia());
-                stmt.setString(7,doc.getNgaySinh());
-                stmt.setString(8,doc.getGioiTinh());
-                stmt.setString(9,doc.getEmail());
-                stmt.setString(10,doc.getSDT());
-                stmt.setInt(11, 1);
-                stmt.setInt(12, 5);
+                stmt.setString(4,doc.getTenDocGia());
+                stmt.setString(5,doc.getNgaySinh());
+                stmt.setString(6,doc.getGioiTinh());
+                stmt.setString(7,doc.getEmail());
+                stmt.setString(8,doc.getSDT());
+                stmt.setInt(9, 1);
+                stmt.setInt(10, 5);
 
                 if (stmt.executeUpdate() >= 1 ){
+                    i++;
                     result = true;
                     System.out.println("Complete");
                 }
@@ -178,20 +179,6 @@ public class DocGiaDAL<result> {
     }
 
 
-//    public boolean hasbtMaDocGia(String id){
-//        boolean result = true;
-//        if (openConection()){
-//            try {
-//                String sql = "Select * from DocGia where MaDocGia=" + id;
-//                Statement stmt = con.createStatement();
-//                ResultSet rs = stmt.executeQuery(sql);
-//                result = rs.next();
-//            }catch (SQLException ex){
-//                System.out.println(ex);
-//            }finally {
-//                closeConection();}}
-//        return result;
-//    }
 
     public boolean deleteDocGia(String id) {
         boolean result = true;

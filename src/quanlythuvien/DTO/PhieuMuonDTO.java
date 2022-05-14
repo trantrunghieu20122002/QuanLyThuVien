@@ -1,5 +1,7 @@
 package quanlythuvien.DTO;
 
+import java.sql.Date;
+
 public class PhieuMuonDTO {
     private String MaPhieuMuon;
     private String NgayMuon;

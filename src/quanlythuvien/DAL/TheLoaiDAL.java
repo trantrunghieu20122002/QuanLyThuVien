@@ -69,7 +69,7 @@ public class TheLoaiDAL {
         Vector<TheLoaiDTO> tmp = new Vector<>();
         if (openConnection()) {
             try {
-                String sql = "Select * from TheLoaiSach where TenTheLoai like '%N" + tenTL + "%'";
+                String sql = "Select * from TheLoaiSach where TenTheLoai like N'%" + tenTL + "%'";
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);
                 while (rs.next()) {

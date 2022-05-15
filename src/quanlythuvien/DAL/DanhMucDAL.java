@@ -13,7 +13,7 @@ import java.util.Vector;
  * @author huyga
  */
 public class DanhMucDAL {
-    
+
     private Connection con;
 
     public boolean openConnection() {
@@ -41,7 +41,7 @@ public class DanhMucDAL {
             System.out.println(ex);
         }
     }
-    
+
     public Vector<DanhMucDTO> getAllDM() {
         Vector<DanhMucDTO> tmp = new Vector<>();
         if (openConnection()) {
@@ -63,8 +63,30 @@ public class DanhMucDAL {
         }
         return tmp;
     }
-    
-        public boolean hasMaDM(String maDM) {
+
+    public Vector<DanhMucDTO> getDMByName(String tenDM) {
+        Vector<DanhMucDTO> tmp = new Vector<>();
+        if (openConnection()) {
+            try {
+                String sql = "Select * from DanhMucSach where TenDanhMuc like N'%" + tenDM + "%'";
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+                while (rs.next()) {
+                    DanhMucDTO dm = new DanhMucDTO();
+                    dm.setMaDM(rs.getString(1));
+                    dm.setTenDM(rs.getString(2));
+                    tmp.add(dm);
+                }
+            } catch (SQLException e) {
+                System.out.println(e);
+            } finally {
+                closeConnection();
+            }
+        }
+        return tmp;
+    }
+
+    public boolean hasMaDM(String maDM) {
         boolean result = false;
         if (openConnection()) {
             try {
@@ -80,7 +102,7 @@ public class DanhMucDAL {
         }
         return result;
     }
-    
+
     public boolean addDM(DanhMucDTO dm) {
         boolean result = false;
         if (openConnection()) {
@@ -100,7 +122,7 @@ public class DanhMucDAL {
         }
         return result;
     }
-    
+
     public boolean deleteDM(DanhMucDTO dm) {
         boolean result = false;
         if (openConnection()) {
@@ -116,7 +138,7 @@ public class DanhMucDAL {
         }
         return result;
     }
-    
+
     public boolean updateDM(DanhMucDTO dm) {
         boolean result = false;
         if (openConnection()) {

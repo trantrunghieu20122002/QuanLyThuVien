@@ -20,6 +20,10 @@ public class TheLoaiBLL {
         return theLoaiDAL.getAllTL();
     }
     
+    public Vector<TheLoaiDTO> getTLByName(String name){
+        return theLoaiDAL.getTLByName(name);
+    }
+    
     public String addTL(TheLoaiDTO tl) {
         if (theLoaiDAL.hasMaTL(tl.getMaTheLoai())) {
             return "Mã thể loại đã tồn tại";

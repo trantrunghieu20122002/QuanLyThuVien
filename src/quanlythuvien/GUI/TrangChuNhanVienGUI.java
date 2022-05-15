@@ -195,9 +195,13 @@ public class TrangChuNhanVienGUI extends JFrame {
             }
         }
 
-        public void loadTheLoaiList() {
+        public void loadTheLoaiList(int x) {
             Vector<TheLoaiDTO> arr = new Vector<>();
-            arr = theLoaiBLL.getAllTL();
+            if (x == 1) {
+                arr = theLoaiBLL.getAllTL();
+            } else {
+                arr = theLoaiBLL.getTLByName(txtMaTheLoaiTimKiem.getText());
+            }
             DefaultTableModel dtm = new DefaultTableModel();
             dtm.addColumn("Mã thể loại ");
             dtm.addColumn("Tên thể loại");
@@ -211,9 +215,13 @@ public class TrangChuNhanVienGUI extends JFrame {
             }
         }
         
-        public void loadDanhMucList() {
+        public void loadDanhMucList(int x) {
             Vector<DanhMucDTO> arr = new Vector<>();
-            arr = danhMucBLL.getAllDM();
+            if (x == 1) {
+                arr = danhMucBLL.getAllDM();
+            } else {
+                arr = danhMucBLL.getDMByName(txtDanhMucTimKiem.getText());
+            }
             DefaultTableModel dtm = new DefaultTableModel();
             dtm.addColumn("Mã thể loại ");
             dtm.addColumn("Tên thể loại");
@@ -546,6 +554,18 @@ public class TrangChuNhanVienGUI extends JFrame {
                 txtDanhMucTimKiem.setColumns(10);
 
                 JButton btnTimKiemDanhMuc = new JButton("Tìm kiếm");
+                btnTimKiemDanhMuc.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String text = "";
+                        if (txtDanhMucTimKiem.getText().trim().equals(text)) {
+                            loadDanhMucList(1);
+                        }
+                        else {
+                            loadDanhMucList(2);
+                        }
+                    }
+                });
                 btnTimKiemDanhMuc.setBounds(491, 42, 85, 21);
                 panelQLDanhMuc.add(btnTimKiemDanhMuc);
 
@@ -608,7 +628,7 @@ public class TrangChuNhanVienGUI extends JFrame {
                                 dm.setMaDM(txtMaDanhMuc.getText());
                                 dm.setTenDM(txtTenDanhMuc.getText());
                                 JOptionPane.showMessageDialog(null, danhMucBLL.addDM(dm));
-                                loadDanhMucList();
+                                loadDanhMucList(1);
                             }
                     }
                 });
@@ -626,7 +646,7 @@ public class TrangChuNhanVienGUI extends JFrame {
                                 dm.setMaDM(txtMaDanhMuc.getText());
                                 dm.setTenDM(txtTenDanhMuc.getText());
                                 JOptionPane.showMessageDialog(null, danhMucBLL.updateDM(dm));
-                                loadDanhMucList();
+                                loadDanhMucList(1);
                             }
                     }
                 });
@@ -643,7 +663,7 @@ public class TrangChuNhanVienGUI extends JFrame {
                                 dm.setMaDM(txtMaDanhMuc.getText());
                                 dm.setTenDM(txtTenDanhMuc.getText());
                                 JOptionPane.showMessageDialog(null, danhMucBLL.deleteDM(dm));
-                                loadDanhMucList();
+                                loadDanhMucList(1);
                             }
 			}
 		});
@@ -656,7 +676,7 @@ public class TrangChuNhanVienGUI extends JFrame {
 		panelQLTheLoai.setBounds(0, 26, 770, 479);
 		QLS.add(panelQLTheLoai);
 		
-		JLabel lblNewLabel_5_1 = new JLabel("Tìm kiếm bằng tên danh mục:");
+		JLabel lblNewLabel_5_1 = new JLabel("Tìm kiếm bằng tên thể loại:");
 		lblNewLabel_5_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		lblNewLabel_5_1.setBounds(47, 41, 176, 21);
 		panelQLTheLoai.add(lblNewLabel_5_1);
@@ -667,6 +687,18 @@ public class TrangChuNhanVienGUI extends JFrame {
 		panelQLTheLoai.add(txtMaTheLoaiTimKiem);
 		
 		JButton btnTimKiemTheLoai = new JButton("Tìm kiếm");
+                btnTimKiemTheLoai.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        String text = "";
+                        if (txtMaTheLoaiTimKiem.getText().trim().equals(text)) {
+                            loadTheLoaiList(1);
+                        }
+                        else {
+                            loadTheLoaiList(2);
+                        }
+                    }
+                });
 		btnTimKiemTheLoai.setBounds(491, 42, 85, 21);
 		panelQLTheLoai.add(btnTimKiemTheLoai);
 		
@@ -729,7 +761,7 @@ public class TrangChuNhanVienGUI extends JFrame {
                                 tl.setMaTheLoai(txtMaTheLoai.getText());
                                 tl.setTenTheLoai(txtTenTheLoai.getText());
                                 JOptionPane.showMessageDialog(null, theLoaiBLL.addTL(tl));
-                                loadTheLoaiList();
+                                loadTheLoaiList(1);
                             }
 			}
 		});
@@ -746,7 +778,7 @@ public class TrangChuNhanVienGUI extends JFrame {
                                 tl.setMaTheLoai(txtMaTheLoai.getText());
                                 tl.setTenTheLoai(txtTenTheLoai.getText());
                                 JOptionPane.showMessageDialog(null, theLoaiBLL.updateTL(tl));
-                                loadTheLoaiList();
+                                loadTheLoaiList(1);
                             }
 			}
 		});
@@ -763,7 +795,7 @@ public class TrangChuNhanVienGUI extends JFrame {
                                 tl.setMaTheLoai(txtMaTheLoai.getText());
                                 tl.setTenTheLoai(txtTenTheLoai.getText());
                                 JOptionPane.showMessageDialog(null, theLoaiBLL.deleteTL(tl));
-                                loadTheLoaiList();
+                                loadTheLoaiList(1);
                             }
 			}
 		});
@@ -1222,7 +1254,7 @@ public class TrangChuNhanVienGUI extends JFrame {
 		loadDocGiaList();
 		loadPhieuMuonList();
                 loadBookList();
-                loadTheLoaiList();
-                loadDanhMucList();
+                loadTheLoaiList(1);
+                loadDanhMucList(1);
 	}
 }

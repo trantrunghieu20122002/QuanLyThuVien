@@ -589,7 +589,7 @@ public class TrangChuNhanVienGUI extends JFrame {
 		));
 		table_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		scrollPane_2.setViewportView(table_2);
-		
+                
 		JButton btnNewButton_4_1 = new JButton("Sửa");
 		btnNewButton_4_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnNewButton_4_1.setBounds(176, 230, 85, 21);

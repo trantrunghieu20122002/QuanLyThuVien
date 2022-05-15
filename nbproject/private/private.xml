@@ -3,11 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Administrator/Documents/QuanLyThuVien/src/quanlythuvien/BLL/PhieuMuonBLL.java</file>
-            <file>file:/C:/Users/Administrator/Documents/QuanLyThuVien/src/quanlythuvien/DTO/DocGiaDTO.java</file>
-            <file>file:/C:/Users/Administrator/Documents/QuanLyThuVien/src/quanlythuvien/DAL/PhieuMuonDAL.java</file>
-            <file>file:/C:/Users/Administrator/Documents/QuanLyThuVien/src/quanlythuvien/GUI/SachGUI.java</file>
-            <file>file:/C:/Users/Administrator/Documents/QuanLyThuVien/src/quanlythuvien/DAL/SachDAL.java</file>
+            <file>file:/D:/Hoc_tap/Lap%20trinh%20Java/test/QuanLyThuVien/src/quanlythuvien/DAL/SachDAL.java</file>
+            <file>file:/D:/Hoc_tap/Lap%20trinh%20Java/test/QuanLyThuVien/src/quanlythuvien/DAL/DocGiaDAL.java</file>
+            <file>file:/D:/Hoc_tap/Lap%20trinh%20Java/test/QuanLyThuVien/src/quanlythuvien/GUI/LoginGUI.java</file>
+            <file>file:/D:/Hoc_tap/Lap%20trinh%20Java/test/QuanLyThuVien/src/quanlythuvien/GUI/TrangChuNhanVienGUI.java</file>
+            <file>file:/D:/Hoc_tap/Lap%20trinh%20Java/test/QuanLyThuVien/src/quanlythuvien/DTO/SachDTO.java</file>
         </group>
     </open-files>
 </project-private>

@@ -16,12 +16,12 @@ public class SachBLL {
     }
     
     public String addBook(SachDTO book) {
-        String s = null;
+        String s = "Thêm thất bại";
         if (empDAL.hasBookId(book.getSach_id())) {
             s = "Mã sách đã tồn tại";
-        } else {
+        } else if (empDAL.addBook(book)){
             s = "Thêm thành công";
-        }
+        } 
         return s;
     }
 }

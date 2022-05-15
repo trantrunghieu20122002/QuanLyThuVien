@@ -67,7 +67,7 @@ public class SachDAL {
         Vector<SachDTO> arr = new Vector<SachDTO>();
         if (openConnection()) {
             try {
-                String sql = "Select * from Sach where TenSach like '%" + name + "%'";
+                String sql = "Select * from Sach where TenSach like N'%" + name + "%'";
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);
                 while (rs.next()) {

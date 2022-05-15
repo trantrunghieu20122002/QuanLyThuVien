@@ -49,14 +49,17 @@ public class TrangChuNhanVienGUI extends JFrame {
 	private JTextField txtSDT;
 	private JTextField txtEmail;
 	private JTable tableDocGia;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_8;
-	private JTextField textField_9;
-	private JTextField textField_10;
-	private JTextField textField_11;
-	private JTextField textField_12;
-	private JTextField textField_13;
+	private JTextField txtMaSach;
+	private JTextField txtTenSach;
+	private JLabel lbTenTL;
+	private JTextField txtSoLuongCon;
+	private JTextField txtNamXB;
+	private JTextField txtTacGia;
+	private JTextField txtNhaXB;
+        private JTextArea txtNoiDung;
+        private JComboBox comboBoxMaTL;
+        private JComboBox comboBoxMaDM;
+	private JLabel lbTenDM;
 	private JTable table_2;
 	private JTextField txtDanhMucTimKiem;
 	private JTextField txtMaDanhMuc;
@@ -870,59 +873,108 @@ public class TrangChuNhanVienGUI extends JFrame {
 		panelQLSach.add(lblNewLabel_4_3_1);
 		lblNewLabel_4_3_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
 
-		textField_6 = new JTextField();
-		textField_6.setBounds(121, 0, 157, 19);
-		panelQLSach.add(textField_6);
-		textField_6.setColumns(10);
+		txtMaSach = new JTextField();
+		txtMaSach.setBounds(121, 0, 157, 19);
+		panelQLSach.add(txtMaSach);
+		txtMaSach.setColumns(10);
 
-		textField_7 = new JTextField();
-		textField_7.setBounds(121, 40, 157, 19);
-		panelQLSach.add(textField_7);
-		textField_7.setColumns(10);
+		txtTenSach = new JTextField();
+		txtTenSach.setBounds(121, 40, 157, 19);
+		panelQLSach.add(txtTenSach);
+		txtTenSach.setColumns(10);
 
-		textField_8 = new JTextField();
-		textField_8.setBounds(121, 119, 157, 19);
-		panelQLSach.add(textField_8);
-		textField_8.setColumns(10);
+		lbTenTL = new JLabel();
+		lbTenTL.setBounds(121, 119, 157, 19);
+		panelQLSach.add(lbTenTL);
+		//lbTenTL.setColumns(10);
 
-		textField_9 = new JTextField();
-		textField_9.setBounds(121, 157, 157, 19);
-		panelQLSach.add(textField_9);
-		textField_9.setColumns(10);
+		txtSoLuongCon = new JTextField();
+		txtSoLuongCon.setBounds(121, 157, 157, 19);
+		panelQLSach.add(txtSoLuongCon);
+		txtSoLuongCon.setColumns(10);
 
-		textField_10 = new JTextField();
-		textField_10.setBounds(121, 190, 157, 19);
-		panelQLSach.add(textField_10);
-		textField_10.setColumns(10);
+		txtNamXB = new JTextField();
+		txtNamXB.setBounds(121, 190, 157, 19);
+		panelQLSach.add(txtNamXB);
+		txtNamXB.setColumns(10);
 
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(124, 77, 154, 21);
-		panelQLSach.add(comboBox);
+		comboBoxMaTL = new JComboBox();
+                for (int i = 0; i < theLoaiBLL.getAllTL().size(); i++) {
+                    comboBoxMaTL.addItem(theLoaiBLL.getAllTL().get(i).getMaTheLoai());
+                }
+                comboBoxMaTL.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        lbTenTL.setText(theLoaiBLL.getAllTL().get(comboBoxMaTL.getSelectedIndex()).getTenTheLoai());
+                    }
+                });
+		comboBoxMaTL.setBounds(124, 77, 154, 21);
+		panelQLSach.add(comboBoxMaTL);
 
-		textField_11 = new JTextField();
-		textField_11.setBounds(466, 0, 200, 19);
-		panelQLSach.add(textField_11);
-		textField_11.setColumns(10);
+		txtTacGia = new JTextField();
+		txtTacGia.setBounds(466, 0, 200, 19);
+		panelQLSach.add(txtTacGia);
+		txtTacGia.setColumns(10);
 
-		textField_12 = new JTextField();
-		textField_12.setBounds(466, 40, 200, 19);
-		panelQLSach.add(textField_12);
-		textField_12.setColumns(10);
+		txtNhaXB = new JTextField();
+		txtNhaXB.setBounds(466, 40, 200, 19);
+		panelQLSach.add(txtNhaXB);
+		txtNhaXB.setColumns(10);
 
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(469, 77, 197, 21);
-		panelQLSach.add(comboBox_1);
+		comboBoxMaDM = new JComboBox();
+                for (int i = 0; i < danhMucBLL.getAllDM().size(); i++) {
+                    comboBoxMaDM.addItem(danhMucBLL.getAllDM().get(i).getMaDM());
+                }
+                comboBoxMaDM.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        lbTenDM.setText(danhMucBLL.getAllDM().get(comboBoxMaDM.getSelectedIndex()).getTenDM());
+                    }
+                });
+		comboBoxMaDM.setBounds(469, 77, 197, 21);
+		panelQLSach.add(comboBoxMaDM);
 
-		textField_13 = new JTextField();
-		textField_13.setBounds(466, 119, 200, 19);
-		panelQLSach.add(textField_13);
-		textField_13.setColumns(10);
+		lbTenDM = new JLabel();
+		lbTenDM.setBounds(466, 119, 200, 19);
+		panelQLSach.add(lbTenDM);
+		//lbTenDM.setColumns(10);
 
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(473, 160, 193, 59);
-		panelQLSach.add(textArea);
+		txtNoiDung = new JTextArea();
+		txtNoiDung.setBounds(473, 160, 193, 59);
+		panelQLSach.add(txtNoiDung);
 
 		JButton btnThemSach = new JButton("Thêm");
+                btnThemSach.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            if (txtMaSach.getText().trim().equals("") ||
+                                txtTenSach.getText().trim().equals("") ||
+                                txtSoLuongCon.getText().trim().equals("") ||
+                                txtTacGia.getText().trim().equals("") ||
+                                txtNhaXB.getText().trim().equals("") ||
+                                txtNamXB.getText().trim().equals("") ||
+                                txtNoiDung.getText().trim().equals("")) {
+                                JOptionPane.showMessageDialog(null,"Vui lòng nhập đầy đủ thông tin sách");
+                            } else {
+                                SachDTO book = new SachDTO();
+                                book.setSach_id(txtMaSach.getText());
+                                book.setSach_name(txtTenSach.getText());
+                                book.setSach_DM(comboBoxMaDM.getSelectedItem().toString());
+                                book.setSach_TL(comboBoxMaTL.getSelectedItem().toString());
+                                book.setSach_author(txtTacGia.getText());
+                                book.setSach_nxb(txtNhaXB.getText());
+                                book.setSach_noidung(txtNoiDung.getText());
+                                book.setSach_quantity(Integer.parseInt(txtSoLuongCon.getText()));
+                                book.setSach_year(Integer.parseInt(txtNamXB.getText()));
+                                JOptionPane.showMessageDialog(null,sachBLL.addBook(book));
+                                loadBookList();
+                            }
+                        } catch (NumberFormatException exc){
+                            JOptionPane.showMessageDialog(null,"Thông tin không hợp lệ");
+                        }
+                    }
+                });
 		btnThemSach.setBounds(59, 229, 85, 21);
 		panelQLSach.add(btnThemSach);
 		btnThemSach.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -932,6 +984,23 @@ public class TrangChuNhanVienGUI extends JFrame {
 		panelQLSach.add(scrollPane_2);
 
 		table_2 = new JTable();
+                table_2.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        int i = table_2.getSelectedRow();
+                        TableModel model = table_2.getModel();
+                        txtMaSach.setText(model.getValueAt(i, 0).toString());
+                        txtTenSach.setText(model.getValueAt(i, 1).toString());
+                        comboBoxMaDM.setSelectedItem(model.getValueAt(i, 2));
+                        comboBoxMaTL.setSelectedItem(model.getValueAt(i, 3));
+                        txtTacGia.setText(model.getValueAt(i, 4).toString());
+                        txtNhaXB.setText(model.getValueAt(i, 5).toString());
+                        txtNamXB.setText(model.getValueAt(i, 6).toString());
+                        txtSoLuongCon.setText(model.getValueAt(i, 7).toString());
+                        txtNoiDung.setText(model.getValueAt(i, 8).toString());
+                        lbTenDM.setText(danhMucBLL.getAllDM().get(comboBoxMaDM.getSelectedIndex()).getTenDM());
+                        lbTenTL.setText(theLoaiBLL.getAllTL().get(comboBoxMaTL.getSelectedIndex()).getTenTheLoai());
+                    }
+                });
 		table_2.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -942,15 +1011,57 @@ public class TrangChuNhanVienGUI extends JFrame {
 		table_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		scrollPane_2.setViewportView(table_2);
                 
-		JButton btnNewButton_4_1 = new JButton("Sửa");
-		btnNewButton_4_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnNewButton_4_1.setBounds(176, 230, 85, 21);
-		panelQLSach.add(btnNewButton_4_1);
+		JButton btnSuaSach = new JButton("Sửa");
+                btnSuaSach.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            if (txtMaSach.getText().trim().equals("") ||
+                                txtTenSach.getText().trim().equals("") ||
+                                txtSoLuongCon.getText().trim().equals("") ||
+                                txtTacGia.getText().trim().equals("") ||
+                                txtNhaXB.getText().trim().equals("") ||
+                                txtNamXB.getText().trim().equals("") ||
+                                txtNoiDung.getText().trim().equals("")) {
+                                JOptionPane.showMessageDialog(null,"Vui lòng nhập đầy đủ thông tin sách");
+                            } else {
+                                SachDTO book = new SachDTO();
+                                book.setSach_id(txtMaSach.getText());
+                                book.setSach_name(txtTenSach.getText());
+                                book.setSach_DM(comboBoxMaDM.getSelectedItem().toString());
+                                book.setSach_TL(comboBoxMaTL.getSelectedItem().toString());
+                                book.setSach_author(txtTacGia.getText());
+                                book.setSach_nxb(txtNhaXB.getText());
+                                book.setSach_noidung(txtNoiDung.getText());
+                                book.setSach_quantity(Integer.parseInt(txtSoLuongCon.getText()));
+                                book.setSach_year(Integer.parseInt(txtNamXB.getText()));
+                                JOptionPane.showMessageDialog(null,sachBLL.updateBook(book));
+                                loadBookList();
+                            }
+                        } catch (NumberFormatException exc){
+                            JOptionPane.showMessageDialog(null,"Thông tin không hợp lệ");
+                        }
+                    }
+                });
+		btnSuaSach.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnSuaSach.setBounds(176, 230, 85, 21);
+		panelQLSach.add(btnSuaSach);
                 
-		JButton btnNewButton_4_2 = new JButton("Xóa");
-		btnNewButton_4_2.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		btnNewButton_4_2.setBounds(294, 230, 85, 21);
-		panelQLSach.add(btnNewButton_4_2);
+		JButton btnXoaSach = new JButton("Xóa");
+                btnXoaSach.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (txtMaSach.getText().trim().equals("")) {
+                            JOptionPane.showMessageDialog(null, "Vui lòng nhập mã sách cần xóa");
+                        } else {
+                            JOptionPane.showMessageDialog(null, sachBLL.deleteBook(txtMaSach.getText()));
+                            loadBookList();
+                        }
+                    }
+                });
+		btnXoaSach.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		btnXoaSach.setBounds(294, 230, 85, 21);
+		panelQLSach.add(btnXoaSach);
 		JButton btnQLS = new JButton("Quản lý sách");
 		btnQLS.setBounds(0, 0, 114, 28);
 		QLS.add(btnQLS);

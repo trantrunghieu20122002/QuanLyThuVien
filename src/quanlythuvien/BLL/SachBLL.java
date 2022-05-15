@@ -24,4 +24,18 @@ public class SachBLL {
         } 
         return s;
     }
+    
+    public String deleteBook(String id) {
+        if (empDAL.deleteBook(id)) {
+            return "Xóa thành công";
+        }
+        return "Xóa thất bại";
+    }
+    
+    public String updateBook(SachDTO book) {
+        if (empDAL.updateBook(book)) {
+            return "Sửa thành công";
+        }
+         return "Sửa thất bại";
+    }
 }

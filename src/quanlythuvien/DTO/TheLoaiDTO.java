@@ -9,5 +9,23 @@ package quanlythuvien.DTO;
  * @author huyga
  */
 public class TheLoaiDTO {
-    private String 
+    private String MaTheLoai;
+    private String TenTheLoai;
+
+    public String getMaTheLoai() {
+        return MaTheLoai;
+    }
+
+    public void setMaTheLoai(String MaTheLoai) {
+        this.MaTheLoai = MaTheLoai;
+    }
+
+    public String getTenTheLoai() {
+        return TenTheLoai;
+    }
+
+    public void setTenTheLoai(String TenTheLoai) {
+        this.TenTheLoai = TenTheLoai;
+    }
+    
 }

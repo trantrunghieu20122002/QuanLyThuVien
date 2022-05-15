@@ -1170,7 +1170,7 @@ public class TrangChuNhanVienGUI extends JFrame {
 						String id = (txtMaPhieuMuon.getText());
 						String ngaymuon = (txtNgayMuon.getText());
 						int songaymuon = (Integer.parseInt(txtSoNgayMuon.getText()));
-						String idDocGia = (txtMaDocGia.getText());
+						String idDocGia = (txtMaDGPhieuMuon.getText());
 						String idNhanVien = (txtMaNhanVien.getText());
 						String ghichu = (txtGhiChu.getText());
 						int trangthai = (Integer.parseInt(txtTrangThai.getText()));

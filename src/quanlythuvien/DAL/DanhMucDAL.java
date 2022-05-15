@@ -64,6 +64,23 @@ public class DanhMucDAL {
         return tmp;
     }
     
+        public boolean hasMaDM(String maDM) {
+        boolean result = false;
+        if (openConnection()) {
+            try {
+                String sql = "select * from DanhMucSach where MaDanhMuc = " + maDM;
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+                result = rs.next();
+            } catch (SQLException e) {
+                System.out.println(e);
+            } finally {
+                closeConnection();
+            }
+        }
+        return result;
+    }
+    
     public boolean addDM(DanhMucDTO dm) {
         boolean result = false;
         if (openConnection()) {
@@ -84,11 +101,11 @@ public class DanhMucDAL {
         return result;
     }
     
-    public boolean deleteDM(String maDM) {
+    public boolean deleteDM(DanhMucDTO dm) {
         boolean result = false;
         if (openConnection()) {
             try {
-                String sql = "delete from DanhMucSach where MaDanhMuc =" + maDM;
+                String sql = "delete from DanhMucSach where MaDanhMuc = '" + dm.getMaDM() + "'";
                 PreparedStatement stmt = con.prepareStatement(sql);
                 result = stmt.executeUpdate() > 0 ? true : false;
             } catch (SQLException e) {
@@ -100,11 +117,11 @@ public class DanhMucDAL {
         return result;
     }
     
-    public boolean updateDM(String maDM, String tenDM) {
+    public boolean updateDM(DanhMucDTO dm) {
         boolean result = false;
         if (openConnection()) {
             try {
-                String sql = "UPDATE TheLoaiSach SET TenTheLoai='" + tenDM + "' WHERE MaTheLoai=" + maDM;
+                String sql = "UPDATE DanhMucSach SET TenDanhMuc = N'" + dm.getTenDM() + "' WHERE MaDanhMuc= '" + dm.getMaDM() + "'";
                 PreparedStatement stmt = con.prepareStatement(sql);
                 result = stmt.executeUpdate() > 0 ? true : false;
             } catch (SQLException e) {

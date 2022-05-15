@@ -31,9 +31,6 @@ public class TheLoaiBLL {
     }
     
     public String deleteTL(TheLoaiDTO tl) {
-        if (!theLoaiDAL.hasMaTL(tl.getMaTheLoai())) {
-            return "Mã thể loại không tồn tại!";
-        }
         if (theLoaiDAL.deleteTL(tl)) {
             return "Xóa thành công";
         }
@@ -41,8 +38,8 @@ public class TheLoaiBLL {
     }
     
     public String updateTL(TheLoaiDTO tl) {
-        if (!theLoaiDAL.hasMaTL(tl.getMaTheLoai())) {
-            
+        if (theLoaiDAL.updateTL(tl)) {
+            return "Sửa thành công";
         }
         return "Sửa thất bại";
     }

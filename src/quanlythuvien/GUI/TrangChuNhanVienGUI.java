@@ -31,6 +31,8 @@ import quanlythuvien.DTO.*;
 
 public class TrangChuNhanVienGUI extends JFrame {
 
+        TheLoaiBLL theLoaiBLL = new TheLoaiBLL();
+        DanhMucBLL danhMucBLL = new DanhMucBLL();
         SachBLL sachBLL = new SachBLL();
 	DocGiaBLL DocGia = new DocGiaBLL();
 	DocGiaBLL docBLL = new DocGiaBLL();
@@ -164,35 +166,66 @@ public class TrangChuNhanVienGUI extends JFrame {
 		}
 	}
         public void loadBookList() {
-        DefaultTableModel dtm = new DefaultTableModel();
-        dtm.addColumn("Mã Sách");
-        dtm.addColumn("Tên Sách");
-        dtm.addColumn("Mã DM");
-        dtm.addColumn("Mã TL");
-        dtm.addColumn("Tác Giả");
-        dtm.addColumn("Nhà Xuất Bản");
-        dtm.addColumn("Năm XB");
-        dtm.addColumn("Số lượng");
-        dtm.addColumn("Tóm tắt");
-        table_2.setModel(dtm);
-        Vector<SachDTO> arr = new Vector<SachDTO>();
-        arr = sachBLL.getAllBook();
-        for (int i = 0; i < arr.size(); i++) {
-            SachDTO book = arr.get(i);
-            String id = book.getSach_id();
-            String name = book.getSach_name();
-            String dm = book.getSach_DM();
-            String tl = book.getSach_TL();
-            String author = book.getSach_author();
-            String nxb = book.getSach_nxb();
-            int year = book.getSach_year();
-            int quantity = book.getSach_quantity();
-            String sumary = book.getSach_noidung();
-            Object[] row = {id, name, dm, tl, author, nxb, year, quantity, sumary};
-            dtm.addRow(row);
+            DefaultTableModel dtm = new DefaultTableModel();
+            dtm.addColumn("Mã Sách");
+            dtm.addColumn("Tên Sách");
+            dtm.addColumn("Mã DM");
+            dtm.addColumn("Mã TL");
+            dtm.addColumn("Tác Giả");
+            dtm.addColumn("Nhà Xuất Bản");
+            dtm.addColumn("Năm XB");
+            dtm.addColumn("Số lượng");
+            dtm.addColumn("Tóm tắt");
+            table_2.setModel(dtm);
+            Vector<SachDTO> arr = new Vector<SachDTO>();
+            arr = sachBLL.getAllBook();
+            for (int i = 0; i < arr.size(); i++) {
+                SachDTO book = arr.get(i);
+                String id = book.getSach_id();
+                String name = book.getSach_name();
+                String dm = book.getSach_DM();
+                String tl = book.getSach_TL();
+                String author = book.getSach_author();
+                String nxb = book.getSach_nxb();
+                int year = book.getSach_year();
+                int quantity = book.getSach_quantity();
+                String sumary = book.getSach_noidung();
+                Object[] row = {id, name, dm, tl, author, nxb, year, quantity, sumary};
+                dtm.addRow(row);
+            }
         }
-    }
 
+        public void loadTheLoaiList() {
+            Vector<TheLoaiDTO> arr = new Vector<>();
+            arr = theLoaiBLL.getAllTL();
+            DefaultTableModel dtm = new DefaultTableModel();
+            dtm.addColumn("Mã thể loại ");
+            dtm.addColumn("Tên thể loại");
+            tableTheLoai.setModel(dtm);
+            for (int i = 0; i < arr.size(); i++) {
+                TheLoaiDTO tl = arr.get(i);
+                String id = tl.getMaTheLoai();
+                String name = tl.getTenTheLoai();
+                Object[] row = {id, name};
+                dtm.addRow(row);
+            }
+        }
+        
+        public void loadDanhMucList() {
+            Vector<DanhMucDTO> arr = new Vector<>();
+            arr = danhMucBLL.getAllDM();
+            DefaultTableModel dtm = new DefaultTableModel();
+            dtm.addColumn("Mã thể loại ");
+            dtm.addColumn("Tên thể loại");
+            tableDanhMuc.setModel(dtm);
+            for (int i = 0; i < arr.size(); i++) {
+                DanhMucDTO dm = arr.get(i);
+                String id = dm.getMaDM();
+                String name = dm.getTenDM();
+                Object[] row = {id, name};
+                dtm.addRow(row);
+            }
+        }
 	/**
 	 * Create the frame.
 	 */
@@ -493,68 +526,130 @@ public class TrangChuNhanVienGUI extends JFrame {
 		btnThongTinDocGia.setBounds(136, 0, 173, 26);
 		QLDG.add(btnThongTinDocGia);
 
-		JPanel QLS = new JPanel();
-		Card.add(QLS, "QLS");
-		QLS.setLayout(null);
-		
-				JPanel panelQLDanhMuc = new JPanel();
-				panelQLDanhMuc.setBounds(0, 26, 770, 479);
-				QLS.add(panelQLDanhMuc);
-				panelQLDanhMuc.setLayout(null);
-				
-						JLabel lblNewLabel_5 = new JLabel("Tìm kiếm bằng tên danh mục:");
-						lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 13));
-						lblNewLabel_5.setBounds(47, 41, 176, 21);
-						panelQLDanhMuc.add(lblNewLabel_5);
-						
-								txtDanhMucTimKiem = new JTextField();
-								txtDanhMucTimKiem.setBounds(261, 43, 185, 19);
-								panelQLDanhMuc.add(txtDanhMucTimKiem);
-								txtDanhMucTimKiem.setColumns(10);
-								
-										JButton btnTimKiemDanhMuc = new JButton("Tìm kiếm");
-										btnTimKiemDanhMuc.setBounds(491, 42, 85, 21);
-										panelQLDanhMuc.add(btnTimKiemDanhMuc);
-										
-												JLabel lblNewLabel_6 = new JLabel("Thông tin của danh mục: ");
-												lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 13));
-												lblNewLabel_6.setBounds(88, 110, 185, 13);
-												panelQLDanhMuc.add(lblNewLabel_6);
-												
-														JLabel lblNewLabel_7 = new JLabel("Mã danh mục:");
-														lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 13));
-														lblNewLabel_7.setBounds(24, 151, 96, 13);
-														panelQLDanhMuc.add(lblNewLabel_7);
-														
-																txtMaDanhMuc = new JTextField();
-																txtMaDanhMuc.setBounds(145, 149, 128, 19);
-																panelQLDanhMuc.add(txtMaDanhMuc);
-																txtMaDanhMuc.setColumns(10);
-																
-																		JLabel lblNewLabel_7_1 = new JLabel("Tên danh mục:");
-																		lblNewLabel_7_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-																		lblNewLabel_7_1.setBounds(24, 200, 96, 13);
-																		panelQLDanhMuc.add(lblNewLabel_7_1);
-																		
-																				txtTenDanhMuc = new JTextField();
-																				txtTenDanhMuc.setColumns(10);
-																				txtTenDanhMuc.setBounds(145, 198, 128, 19);
-																				panelQLDanhMuc.add(txtTenDanhMuc);
-																				
-																						JScrollPane scrollPane_3 = new JScrollPane();
-																						scrollPane_3.setBounds(375, 110, 385, 245);
-																						panelQLDanhMuc.add(scrollPane_3);
-																						
-																								tableDanhMuc = new JTable();
-																								tableDanhMuc.setModel(new DefaultTableModel(
-																									new Object[][] {
-																									},
-																									new String[] {
-																										"Mã danh mục", "Tên danh mục"
-																									}
-																								));
-																								scrollPane_3.setViewportView(tableDanhMuc);
-																								panelQLDanhMuc.hide();
+                JPanel QLS = new JPanel();
+                Card.add(QLS, "QLS");
+                QLS.setLayout(null);
+
+                JPanel panelQLDanhMuc = new JPanel();
+                panelQLDanhMuc.setBounds(0, 26, 770, 479);
+                QLS.add(panelQLDanhMuc);
+                panelQLDanhMuc.setLayout(null);
+
+                JLabel lblFindDM = new JLabel("Tìm kiếm bằng tên danh mục");
+                lblFindDM.setFont(new Font("Tahoma", Font.PLAIN, 13));
+                lblFindDM.setBounds(47, 41, 176, 21);
+                panelQLDanhMuc.add(lblFindDM);
+
+                txtDanhMucTimKiem = new JTextField();
+                txtDanhMucTimKiem.setBounds(261, 43, 185, 19);
+                panelQLDanhMuc.add(txtDanhMucTimKiem);
+                txtDanhMucTimKiem.setColumns(10);
+
+                JButton btnTimKiemDanhMuc = new JButton("Tìm kiếm");
+                btnTimKiemDanhMuc.setBounds(491, 42, 85, 21);
+                panelQLDanhMuc.add(btnTimKiemDanhMuc);
+
+                JLabel lblNewLabel_6 = new JLabel("Thông tin của danh mục: ");
+                lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 13));
+                lblNewLabel_6.setBounds(88, 110, 185, 13);
+                panelQLDanhMuc.add(lblNewLabel_6);
+
+                JLabel lblNewLabel_7 = new JLabel("Mã danh mục:");
+                lblNewLabel_7.setFont(new Font("Tahoma", Font.PLAIN, 13));
+                lblNewLabel_7.setBounds(24, 151, 96, 13);
+                panelQLDanhMuc.add(lblNewLabel_7);
+
+                txtMaDanhMuc = new JTextField();
+                txtMaDanhMuc.setBounds(145, 149, 128, 19);
+                panelQLDanhMuc.add(txtMaDanhMuc);
+                txtMaDanhMuc.setColumns(10);
+
+                JLabel lblNewLabel_7_1 = new JLabel("Tên danh mục:");
+                lblNewLabel_7_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
+                lblNewLabel_7_1.setBounds(24, 200, 96, 13);
+                panelQLDanhMuc.add(lblNewLabel_7_1);
+
+                txtTenDanhMuc = new JTextField();
+                txtTenDanhMuc.setColumns(10);
+                txtTenDanhMuc.setBounds(145, 198, 128, 19);
+                panelQLDanhMuc.add(txtTenDanhMuc);
+
+                JScrollPane scrollPane_3 = new JScrollPane();
+                scrollPane_3.setBounds(375, 110, 385, 245);
+                panelQLDanhMuc.add(scrollPane_3);
+
+                tableDanhMuc = new JTable();
+                tableDanhMuc.setModel(new DefaultTableModel(
+                        new Object[][]{},
+                        new String[]{
+                            "Mã danh mục", "Tên danh mục"
+                        }
+                ));
+                
+                tableDanhMuc.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int i = tableDanhMuc.getSelectedRow();
+				TableModel model = tableDanhMuc.getModel();
+                                txtMaDanhMuc.setText(model.getValueAt(i, 0).toString());
+                                txtTenDanhMuc.setText(model.getValueAt(i, 1).toString());
+			}
+		});
+                
+                scrollPane_3.setViewportView(tableDanhMuc);
+
+                JButton btnAddDM = new JButton("Thêm");
+                btnAddDM.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        if (txtMaDanhMuc.getText().trim().equals("") || txtTenDanhMuc.getText().trim().equals("")) {
+                                JOptionPane.showMessageDialog(null, "Vui lòng nhập đủ thông tin");
+                            } else {
+                                DanhMucDTO dm = new DanhMucDTO();
+                                dm.setMaDM(txtMaDanhMuc.getText());
+                                dm.setTenDM(txtTenDanhMuc.getText());
+                                JOptionPane.showMessageDialog(null, danhMucBLL.addDM(dm));
+                                loadDanhMucList();
+                            }
+                    }
+                });
+                btnAddDM.setBounds(24, 313, 85, 21);
+                panelQLDanhMuc.add(btnAddDM);
+
+                JButton btnUpdateDM = new JButton("Sửa");
+                btnUpdateDM.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (txtMaDanhMuc.getText().trim().equals("") || txtTenDanhMuc.getText().trim().equals("")) {
+                                JOptionPane.showMessageDialog(null, "Vui lòng nhập đủ thông tin");
+                            } else {
+                                DanhMucDTO dm = new DanhMucDTO();
+                                dm.setMaDM(txtMaDanhMuc.getText());
+                                dm.setTenDM(txtTenDanhMuc.getText());
+                                JOptionPane.showMessageDialog(null, danhMucBLL.updateDM(dm));
+                                loadDanhMucList();
+                            }
+                    }
+                });
+                btnUpdateDM.setBounds(145, 313, 85, 21);
+                panelQLDanhMuc.add(btnUpdateDM);
+
+                JButton btnDeleteDM = new JButton("Xóa");
+                btnDeleteDM.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+                            if (txtMaDanhMuc.getText().trim().equals("") || txtTenDanhMuc.getText().trim().equals("")) {
+                                JOptionPane.showMessageDialog(null, "Vui lòng nhập đủ thông tin");
+                            } else {
+                                DanhMucDTO dm = new DanhMucDTO();
+                                dm.setMaDM(txtMaDanhMuc.getText());
+                                dm.setTenDM(txtTenDanhMuc.getText());
+                                JOptionPane.showMessageDialog(null, danhMucBLL.deleteDM(dm));
+                                loadDanhMucList();
+                            }
+			}
+		});
+                btnDeleteDM.setBounds(261, 313, 85, 21);
+                panelQLDanhMuc.add(btnDeleteDM);
+                panelQLDanhMuc.hide();
 		
 		JPanel panelQLTheLoai = new JPanel();
 		panelQLTheLoai.setLayout(null);
@@ -601,11 +696,80 @@ public class TrangChuNhanVienGUI extends JFrame {
 		panelQLTheLoai.add(txtTenTheLoai);
 		
 		JScrollPane scrollPane_5 = new JScrollPane();
-		scrollPane_5.setBounds(302, 110, 445, 359);
+		scrollPane_5.setBounds(375, 110, 385, 245);
 		panelQLTheLoai.add(scrollPane_5);
 		
 		tableTheLoai = new JTable();
+		tableTheLoai.setModel(new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+					"Mã thể loại", "Tên thể loại"
+				}
+			));
 		scrollPane_5.setViewportView(tableTheLoai);
+                
+                tableTheLoai.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int i = tableTheLoai.getSelectedRow();
+				TableModel model = tableTheLoai.getModel();
+                                txtMaTheLoai.setText(model.getValueAt(i, 0).toString());
+                                txtTenTheLoai.setText(model.getValueAt(i, 1).toString());
+			}
+		});
+		
+		JButton btnAddTL = new JButton("Thêm");
+		btnAddTL.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+                            if (txtMaTheLoai.getText().trim().equals("") || txtTenTheLoai.getText().trim().equals("")) {
+                                JOptionPane.showMessageDialog(null, "Vui lòng nhập đủ thông tin");
+                            } else {
+                                TheLoaiDTO tl = new TheLoaiDTO();
+                                tl.setMaTheLoai(txtMaTheLoai.getText());
+                                tl.setTenTheLoai(txtTenTheLoai.getText());
+                                JOptionPane.showMessageDialog(null, theLoaiBLL.addTL(tl));
+                                loadTheLoaiList();
+                            }
+			}
+		});
+		btnAddTL.setBounds(24, 313, 85, 21);
+		panelQLTheLoai.add(btnAddTL);
+		
+		JButton btnUpdateTL = new JButton("Sửa");
+                btnUpdateTL.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+                            if (txtMaTheLoai.getText().trim().equals("") || txtTenTheLoai.getText().trim().equals("")) {
+                                JOptionPane.showMessageDialog(null, "Vui lòng nhập đủ thông tin");
+                            } else {
+                                TheLoaiDTO tl = new TheLoaiDTO();
+                                tl.setMaTheLoai(txtMaTheLoai.getText());
+                                tl.setTenTheLoai(txtTenTheLoai.getText());
+                                JOptionPane.showMessageDialog(null, theLoaiBLL.updateTL(tl));
+                                loadTheLoaiList();
+                            }
+			}
+		});
+		btnUpdateTL.setBounds(145, 313, 85, 21);
+		panelQLTheLoai.add(btnUpdateTL);
+		
+		JButton btnDeleteTL = new JButton("Xóa");
+                btnDeleteTL.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+                            if (txtMaTheLoai.getText().trim().equals("") || txtTenTheLoai.getText().trim().equals("")) {
+                                JOptionPane.showMessageDialog(null, "Vui lòng nhập đủ thông tin");
+                            } else {
+                                TheLoaiDTO tl = new TheLoaiDTO();
+                                tl.setMaTheLoai(txtMaTheLoai.getText());
+                                tl.setTenTheLoai(txtTenTheLoai.getText());
+                                JOptionPane.showMessageDialog(null, theLoaiBLL.deleteTL(tl));
+                                loadTheLoaiList();
+                            }
+			}
+		});
+		btnDeleteTL.setBounds(261, 313, 85, 21);
+		panelQLTheLoai.add(btnDeleteTL);
+		panelQLTheLoai.hide();
 
 		JButton btnQLDM = new JButton("Quản lý danh mục");
 
@@ -1058,5 +1222,7 @@ public class TrangChuNhanVienGUI extends JFrame {
 		loadDocGiaList();
 		loadPhieuMuonList();
                 loadBookList();
+                loadTheLoaiList();
+                loadDanhMucList();
 	}
 }

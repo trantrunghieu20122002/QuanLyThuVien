@@ -165,4 +165,47 @@ public class SachDAL {
         }
         return result;
     }
+    
+    public boolean deleteBook(String id) {
+        boolean result = false;
+        if (openConnection()) {
+            try {
+                String sql = "delete from Sach where MaSach = '" + id + "'";
+                PreparedStatement stmt = con.prepareStatement(sql);
+                if (stmt.executeUpdate() >= 1) {
+                    result = true;
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                closeConnection();
+            }
+        }
+        return result;
+    }
+    
+    public boolean updateBook(SachDTO book) {
+        boolean result  = false;
+        if (openConnection()) {
+            try {
+                String sql = "update Sach set TenSach = ?, DanhMuc = ?, TheLoai = ?, TacGia = ?, NXB = ?, NamXB = ?, SoLuongCon = ?, NoiDung = ? where MaSach = ?";
+                PreparedStatement stmt = con.prepareStatement(sql);
+                stmt.setString(1, book.getSach_name());
+                stmt.setString(2, book.getSach_DM());
+                stmt.setString(3, book.getSach_TL());
+                stmt.setString(4, book.getSach_author());
+                stmt.setString(5, book.getSach_nxb());
+                stmt.setInt(6, book.getSach_year());
+                stmt.setInt(7, book.getSach_quantity());
+                stmt.setString(8, book.getSach_noidung());
+                stmt.setString(9, book.getSach_id());
+                result = stmt.executeUpdate() > 0 ? true : false;
+            } catch (SQLException e) {
+                System.out.println(e);
+            } finally {
+                closeConnection();
+            }
+        }
+        return result;
+    }
 }

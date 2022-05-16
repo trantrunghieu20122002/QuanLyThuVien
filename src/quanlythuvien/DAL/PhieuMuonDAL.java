@@ -37,29 +37,30 @@ public class PhieuMuonDAL {
         } catch (SQLException ex) {
             System.out.println(ex); }
     }
-    public boolean editPhieuMuon(String NgayMuon, int SoNgayMuon, String idDocGia, String idNhanVien, String GhiChu, int TrangThai,String idPhieuMuon){
-        boolean result = true;
-        if (openConection()){
+    public boolean editPhieuMuon(String NgayMuon, int SoNgayMuon, String idDocGia, String idNhanVien, String GhiChu, int TrangThai, String idPhieuMuon) {
+        boolean result = false;
+        if (openConection()) {
             try {
-
-                if (openConection()){
-                    try {
-                        String sql = "UPDATE PhieuMuon SET NgayMuon = '"+NgayMuon +"', SoNgayMuon = "+ SoNgayMuon+", MaDocGia = '"+idDocGia+"', MaNhanVien = '"+idNhanVien+"', GhiChu = '"+GhiChu+"', TrangThai =0 Where MaPhieuMuon = '"+idPhieuMuon+"'" ;
-                        PreparedStatement stmt = con.prepareStatement(sql);
-                        if (stmt.executeUpdate() >= 1 ){
-                            result = true;
-                            System.out.println("Complete");
-                        }
-                        else
-                            result = false;
-                        } catch (SQLException e) {
-                        e.printStackTrace();
-                        }finally {
-                        closeConection();}}
-                return result;
-
-            }finally {
-                closeConection();}}
+                //String sql = "UPDATE PhieuMuon SET NgayMuon = '" + NgayMuon + "', SoNgayMuon = " + SoNgayMuon + ", MaDocGia = '" + idDocGia + "', MaNhanVien = '" + idNhanVien + "', GhiChu = '" + GhiChu + "', TrangThai =0 Where MaPhieuMuon = '" + idPhieuMuon + "'";
+                String sql = "UPDATE PhieuMuon SET NgayMuon = ?, SoNgayMuon = ?, MaDocGia = ?, MaNhanVien = ?, GhiChu = ?, TrangThai = ? Where MaPhieuMuon = ?";
+                PreparedStatement stmt = con.prepareStatement(sql);
+                stmt.setString(1, NgayMuon);
+                stmt.setInt(2, SoNgayMuon);
+                stmt.setString(3, idDocGia);
+                stmt.setString(4, idNhanVien);
+                stmt.setString(5, GhiChu);
+                stmt.setInt(6, TrangThai);
+                stmt.setString(7, idPhieuMuon);
+                if (stmt.executeUpdate() >= 1) {
+                    result = true;
+                    System.out.println("Complete");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                closeConection();
+            }
+        }
         return result;
     }
     public boolean hasMaPhieuMuon(String id){

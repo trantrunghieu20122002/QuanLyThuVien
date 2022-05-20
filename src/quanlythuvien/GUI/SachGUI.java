@@ -13,17 +13,20 @@ public class SachGUI extends javax.swing.JFrame {
     String findName = "";
     String ChiTietID="";
     String IdSachMuon="";
-    String IdUser ="DG001";
+    String IdUser ="";
     int NgayMuon=7;
     int DeleteIndex=-1;
     // ======================================================      
     SachBLL empBLL = new SachBLL();
     DocGiaBLL DocGia = new DocGiaBLL();
     PhieuMuonBLL PhieuMuon = new PhieuMuonBLL();
-    DocGiaDTO user = DocGia.getIdDocGia(IdUser);
+    DocGiaDTO user ;
      Vector<SachDTO> DanhSachMuon = new Vector<SachDTO>();
     // ======================================================      
-    public SachGUI() {
+    public SachGUI(String IdUser) {
+        this.IdUser=IdUser;
+        user= DocGia.getIdDocGia(IdUser);
+        System.out.print(IdUser);
         initComponents();
         SetSoLuongMuon();
         loadBookList();
@@ -378,7 +381,7 @@ public class SachGUI extends javax.swing.JFrame {
         jLabel4.setText(String.valueOf(user.getSoLuongMuon()));
     }
     private void LogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutActionPerformed
-        LoginGUI lg=new LoginGUI();
+        LoginForm lg=new LoginForm();
         lg.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_LogOutActionPerformed
@@ -513,13 +516,13 @@ public class SachGUI extends javax.swing.JFrame {
         }
     }
     
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SachGUI().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new SachGUI().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtnAddBook;

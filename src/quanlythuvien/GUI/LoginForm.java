@@ -43,7 +43,7 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         btnSignUp = new javax.swing.JButton();
         btnLogin = new javax.swing.JButton();
-        txtPassword = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField();
         jMenuBar1 = new javax.swing.JMenuBar();
 
         jLabel1.setText("jLabel1");
@@ -133,7 +133,7 @@ public class LoginForm extends javax.swing.JFrame {
     
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         String username = txtUsername.getText();
-        String password = txtPassword.getText();
+        String password = String.valueOf(txtPassword.getPassword());
         boolean confirms = true;
         if (username.equals("")){
             confirms = false;
@@ -149,7 +149,7 @@ public class LoginForm extends javax.swing.JFrame {
             String sql="select * from [dbo].[TaiKhoan] where TenDangNhap = ? and MatKhau = ?";
             PreparedStatement ps=con.prepareCall(sql);
             ps.setString(1,txtUsername.getText());
-            ps.setString(2,txtPassword.getText());
+            ps.setString(2,password);
             ResultSet rs=ps.executeQuery();
             if(rs.next()){
                 JOptionPane.showMessageDialog(this,"Đăng nhập thành công");
@@ -200,7 +200,7 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

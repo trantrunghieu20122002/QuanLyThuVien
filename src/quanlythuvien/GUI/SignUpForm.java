@@ -37,19 +37,23 @@ public class SignUpForm extends javax.swing.JFrame {
         boolean result = false;
         if(openConnection()){
             try{
-                String sql="INSERT into [dbo].[TaiKhoan]([MaTaiKhoan],[TenDangNhap],[MatKhau],[Quyen])"+"Values('1',?,?,2)";
+                String pass = String.valueOf(txtPassword.getPassword());
+                String id="DG00"+SoTaiKhoan();
+                String sql="INSERT into [dbo].[TaiKhoan]([MaTaiKhoan],[TenDangNhap],[MatKhau],[Quyen])"+"Values(?,?,?,2)";
                 PreparedStatement stmt = con.prepareStatement(sql);
-                    stmt.setString(1,txtUsername.getText());
-                    stmt.setString(2,txtPassword.getText());
+                    stmt.setString(1,id);
+                    stmt.setString(2,txtUsername.getText());
+                    stmt.setString(3,pass);
                 
                 
-                String sql2="INSERT into [dbo].[DocGia]([MaDocGia],[TenDocGia],[NgaySinh],[GioiTinh],[Email],[SDT],[Status],[SoLuongMuon])"+"Values('1',?,?,?,?,?,1,0)";
+                String sql2="INSERT into [dbo].[DocGia]([MaDocGia],[TenDocGia],[NgaySinh],[GioiTinh],[Email],[SDT],[Status],[SoLuongMuon])"+"Values(?,?,?,?,?,?,1,0)";
                 PreparedStatement stmt2 = con.prepareStatement(sql2);
-                    stmt2.setString(1,txtName.getText());
-                    stmt2.setString(2,"2001-06-12");//bí get ngày sinh formattedtextfield
-                    stmt2.setString(3,"nam");//bí get giới tính combobox
-                    stmt2.setString(4,txtMail.getText());
-                    stmt2.setString(5,txtPhone.getText());
+                    stmt2.setString(1,id);
+                    stmt2.setString(2,txtName.getText());
+                    stmt2.setString(3,"2001-06-12");//bí get ngày sinh formattedtextfield
+                    stmt2.setString(4,"nam");//bí get giới tính combobox
+                    stmt2.setString(5,txtMail.getText());
+                    stmt2.setString(6,txtPhone.getText());
                 if(stmt.executeUpdate()>0 && stmt2.executeUpdate()>0)
                     result = true;
                 else
@@ -62,6 +66,44 @@ public class SignUpForm extends javax.swing.JFrame {
         }
         return result;
     }
+    
+    public int SoTaiKhoan(){
+        int row=0;
+        if(openConnection()){
+            try {
+                String sql = "Select * from TaiKhoan where Quyen = 2";
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(sql);
+                while(rs.next())
+                    row++;
+            }catch (SQLException ex){
+                System.out.println(ex+"Sai ở đây 2");
+            }
+        }
+        return row+1;
+    }
+    
+    private boolean CheckName(String name){
+        boolean result = true;
+        if(openConnection()){
+            try{
+                String sql="select * from [dbo].[TaiKhoan] where TenDangNhap = ?";
+                PreparedStatement ps=con.prepareCall(sql);
+                ps.setString(1,name);
+                ResultSet rs=ps.executeQuery();
+                if(rs.next())
+                    result= false;
+                else
+                    result = true;
+            }catch (SQLException ex){
+                System.out.println(ex+"Sai ở đây 3");
+            }finally{
+                closeConection();
+            }
+        }
+        return result;
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -86,7 +128,7 @@ public class SignUpForm extends javax.swing.JFrame {
         cbSex = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
-        txtPassword = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SignUp");
@@ -132,8 +174,7 @@ public class SignUpForm extends javax.swing.JFrame {
 
         fmtBirth.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
 
-        cbSex.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ", "Khác" }));
-        cbSex.setSelectedIndex(-1);
+        cbSex.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ" }));
 
         jLabel9.setText("Họ và tên:");
 
@@ -183,7 +224,7 @@ public class SignUpForm extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 100, Short.MAX_VALUE)
+                .addGap(0, 97, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(98, 98, 98))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -257,9 +298,19 @@ public class SignUpForm extends javax.swing.JFrame {
     private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
         String name = txtName.getText();
         String sdt = txtPhone.getText();
+        String password = String.valueOf(txtPassword.getPassword());
+        String repassword = String.valueOf(txtConfirmPassword.getPassword());
+        System.out.println(password);
+        System.out.println(repassword);
         boolean confirm = true;
         if (txtUsername.getText().equals("")){
             JOptionPane.showMessageDialog(this,"Tên đăng nhập không được để trống \n");
+            txtUsername.setBackground(Color.yellow);
+            txtUsername.requestFocus();
+            confirm = false;
+        }
+        else if(CheckName(txtUsername.getText())==false){
+            JOptionPane.showMessageDialog(this,"Tên đăng nhập đã được sử dụng \n");
             txtUsername.setBackground(Color.yellow);
             txtUsername.requestFocus();
             confirm = false;
@@ -271,15 +322,13 @@ public class SignUpForm extends javax.swing.JFrame {
             confirm = false;
         }
         else
-        if (txtPassword.getText().equals("")){
+        if (password.equals("")){
             JOptionPane.showMessageDialog(this,"Mật khẩu không được để trống \n");
             txtPassword.setBackground(Color.yellow);
             txtPassword.requestFocus();
             confirm = false;
         }
-        else if (txtPassword.getText().equals(Arrays.toString(txtConfirmPassword.getPassword()))  ){
-            System.out.println(txtConfirmPassword.getPassword().toString());
-            System.out.println(txtPassword.getText());
+        else if (!password.equals(repassword) ){
             JOptionPane.showMessageDialog(this,"Mật khẩu chưa khớp \n");
             txtPassword.setBackground(Color.yellow);
             confirm = false;
@@ -337,7 +386,7 @@ public class SignUpForm extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtConfirmPassword;
     private javax.swing.JTextField txtMail;
     private javax.swing.JTextField txtName;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtPhone;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables

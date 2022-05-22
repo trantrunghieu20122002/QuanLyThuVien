@@ -71,7 +71,7 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="cbSex" min="-2" max="-2" attributes="0"/>
-                                  <Component id="fmtBirth" min="-2" pref="135" max="-2" attributes="0"/>
+                                  <Component id="fmtBirth" min="-2" pref="191" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
@@ -143,9 +143,9 @@
                   <Component id="cbSex" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="fmtBirth" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                  <Component id="fmtBirth" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
               <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
@@ -240,13 +240,6 @@
     </Component>
     <Component class="javax.swing.JTextField" name="txtPhone">
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="fmtBirth">
-      <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-          <Format format="dd/MM/yyyy" subtype="-1" type="1"/>
-        </Property>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JComboBox" name="cbSex">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -256,6 +249,9 @@
           </StringArray>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbSexActionPerformed"/>
+      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -268,6 +264,11 @@
     <Component class="javax.swing.JTextField" name="txtName">
     </Component>
     <Component class="javax.swing.JPasswordField" name="txtPassword">
+    </Component>
+    <Component class="com.toedter.calendar.JDateChooser" name="fmtBirth">
+      <Properties>
+        <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

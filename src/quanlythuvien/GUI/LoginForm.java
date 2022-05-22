@@ -152,12 +152,13 @@ public class LoginForm extends javax.swing.JFrame {
             ps.setString(2,password);
             ResultSet rs=ps.executeQuery();
             if(rs.next()){
-                JOptionPane.showMessageDialog(this,"Đăng nhập thành công");
                 if(rs.getInt(4)==2){
                     SachGUI sg = new SachGUI(rs.getString(1));
                     sg.setVisible(true);
                 }
-                else{
+                else if (rs.getInt(4)==0)
+                    JOptionPane.showMessageDialog(this,"Tài khoản đã bị khóa");
+                else{                 
                     TrangChuNhanVienGUI nv = new TrangChuNhanVienGUI();
                     nv.setVisible(true);
                 }                

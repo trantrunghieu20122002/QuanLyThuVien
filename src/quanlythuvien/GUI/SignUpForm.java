@@ -3,9 +3,10 @@ package quanlythuvien.GUI;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import java.awt.Color;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 public class SignUpForm extends javax.swing.JFrame {
-
+    private String gender = "Nam";
     public SignUpForm() {
         initComponents();
     }
@@ -35,6 +36,9 @@ public class SignUpForm extends javax.swing.JFrame {
     }
     public boolean insert(){
         boolean result = false;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String date = sdf.format(fmtBirth.getDate());
+        
         if(openConnection()){
             try{
                 String pass = String.valueOf(txtPassword.getPassword());
@@ -50,8 +54,8 @@ public class SignUpForm extends javax.swing.JFrame {
                 PreparedStatement stmt2 = con.prepareStatement(sql2);
                     stmt2.setString(1,id);
                     stmt2.setString(2,txtName.getText());
-                    stmt2.setString(3,"2001-06-12");//bí get ngày sinh formattedtextfield
-                    stmt2.setString(4,"nam");//bí get giới tính combobox
+                    stmt2.setString(3,date);
+                    stmt2.setString(4,gender);
                     stmt2.setString(5,txtMail.getText());
                     stmt2.setString(6,txtPhone.getText());
                 if(stmt.executeUpdate()>0 && stmt2.executeUpdate()>0)
@@ -71,7 +75,7 @@ public class SignUpForm extends javax.swing.JFrame {
         int row=0;
         if(openConnection()){
             try {
-                String sql = "Select * from TaiKhoan where Quyen = 2";
+                String sql = "Select * from TaiKhoan where Quyen = 2 or Quyen = 0";
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);
                 while(rs.next())
@@ -124,11 +128,11 @@ public class SignUpForm extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         txtPhone = new javax.swing.JTextField();
-        fmtBirth = new javax.swing.JFormattedTextField();
         cbSex = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
         txtPassword = new javax.swing.JPasswordField();
+        fmtBirth = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SignUp");
@@ -172,11 +176,16 @@ public class SignUpForm extends javax.swing.JFrame {
 
         jLabel8.setText("Ngày sinh:");
 
-        fmtBirth.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
-
         cbSex.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ" }));
+        cbSex.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbSexActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Họ và tên:");
+
+        fmtBirth.setDateFormatString("yyyy-MM-dd");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -220,7 +229,7 @@ public class SignUpForm extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(cbSex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fmtBirth, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(fmtBirth, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -274,7 +283,7 @@ public class SignUpForm extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(cbSex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(fmtBirth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -300,9 +309,8 @@ public class SignUpForm extends javax.swing.JFrame {
         String sdt = txtPhone.getText();
         String password = String.valueOf(txtPassword.getPassword());
         String repassword = String.valueOf(txtConfirmPassword.getPassword());
-        System.out.println(password);
-        System.out.println(repassword);
         boolean confirm = true;
+        
         if (txtUsername.getText().equals("")){
             JOptionPane.showMessageDialog(this,"Tên đăng nhập không được để trống \n");
             txtUsername.setBackground(Color.yellow);
@@ -345,18 +353,28 @@ public class SignUpForm extends javax.swing.JFrame {
             txtPhone.requestFocus();
             confirm = false;
         }
+        else if(fmtBirth.getDate()==null){
+            JOptionPane.showMessageDialog(this,"Vui lòng nhập ngày sinh\n");
+            fmtBirth.setBackground(Color.yellow);
+            fmtBirth.requestFocus();
+            confirm = false;
+        }
         else if ( confirm == true){
             if(insert())
             JOptionPane.showMessageDialog(this, "Đăng ký thành công!");
             else
             JOptionPane.showMessageDialog(this, "Đăng ký thất bại");
         }
-        
     }//GEN-LAST:event_btnSignUpActionPerformed
 
     private void txtMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMailActionPerformed
+
+    private void cbSexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSexActionPerformed
+        if (cbSex.getSelectedIndex() != -1)
+            gender=cbSex.getItemAt(cbSex.getSelectedIndex());
+    }//GEN-LAST:event_cbSexActionPerformed
 
 
     public static void main(String args[]) {
@@ -371,7 +389,7 @@ public class SignUpForm extends javax.swing.JFrame {
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnSignUp;
     private javax.swing.JComboBox<String> cbSex;
-    private javax.swing.JFormattedTextField fmtBirth;
+    private com.toedter.calendar.JDateChooser fmtBirth;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -192,7 +192,9 @@ public class DocGiaDAL<result> {
 //                    System.out.println("Complete");
 //                }
                 stmt.executeUpdate(sql);
-
+                String sql2 = "Update [dbo].[TaiKhoan] set Quyen = 0 where MaTaiKhoan = '"+id+"'";
+                Statement stmt2 = con.createStatement();
+                stmt2.executeUpdate(sql2);
             }catch (SQLException ex){
                 System.out.println(ex);
                 System.out.println("aaaaaa");

@@ -51,10 +51,10 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                  <Component id="jLabel7" min="-2" pref="103" max="-2" attributes="0"/>
+                  <Component id="jLabel7" min="-2" pref="186" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="TitleText" max="32767" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="TitleText" min="-2" pref="335" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Component id="LogOut" min="-2" pref="120" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
               </Group>
@@ -86,7 +86,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="MingLiU" size="24" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="              SGU LIBRARY"/>
+            <Property name="text" type="java.lang.String" value="        SGU LIBRARY"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="LogOut">
@@ -108,7 +108,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI Semibold" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jLabel7"/>
+            <Property name="text" type="java.lang.String" value="sa"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">

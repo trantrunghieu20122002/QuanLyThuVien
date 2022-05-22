@@ -72,7 +72,7 @@ public class SachGUI extends javax.swing.JFrame {
         PanelTop.setBackground(new java.awt.Color(255, 204, 204));
 
         TitleText.setFont(new java.awt.Font("MingLiU", 1, 24)); // NOI18N
-        TitleText.setText("              SGU LIBRARY");
+        TitleText.setText("        SGU LIBRARY");
 
         LogOut.setBackground(new java.awt.Color(204, 255, 204));
         LogOut.setText("Đăng Xuất");
@@ -84,7 +84,7 @@ public class SachGUI extends javax.swing.JFrame {
         });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Semibold", 1, 14)); // NOI18N
-        jLabel7.setText("jLabel7");
+        jLabel7.setText("sa");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setText("Xin Chào :");
@@ -96,10 +96,10 @@ public class SachGUI extends javax.swing.JFrame {
             .addGroup(PanelTopLayout.createSequentialGroup()
                 .addComponent(jLabel8)
                 .addGap(4, 4, 4)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TitleText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(TitleText, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(LogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4))
         );

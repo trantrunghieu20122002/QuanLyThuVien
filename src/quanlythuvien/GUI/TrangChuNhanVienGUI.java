@@ -379,7 +379,7 @@ public class TrangChuNhanVienGUI extends JFrame {
 										doc.setNgaySinh(txtNgaySinh.getText());
 										doc.setEmail(txtEmail.getText());
 										loadDocGiaList();
-										JOptionPane.showMessageDialog(null,docBLL.editDocGia(doc.getTenDocGia(), doc.getNgaySinh(), doc.getTenDocGia(), doc.getEmail(), doc.getSDT(), doc.getMaDocGia()));
+										JOptionPane.showMessageDialog(null,docBLL.editDocGia(doc.getTenDocGia(), doc.getNgaySinh(), doc.getGioiTinh(), doc.getEmail(), doc.getSDT(), doc.getMaDocGia()));
 										loadDocGiaList();
 									}
 								}catch (NumberFormatException ex){

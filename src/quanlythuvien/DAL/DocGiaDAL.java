@@ -115,7 +115,8 @@ public class DocGiaDAL<result> {
         boolean result = true;
         if (openConection()){
             try {
-                String sql = "UPDATE DocGia SET TenDocGia = '"+name+"', NgaySinh = '"+birthday+"', Email = '"+email+"', SDT = "+phone+", GioiTinh = '"+sex+ "' WHERE MaDocGia = '"+id+"'" ;
+                String sql = "UPDATE DocGia SET TenDocGia = '"+name+"', NgaySinh = '"+birthday+"', Email = '"+email+"', SDT = '"+phone+"', GioiTinh = N'"+sex+"' WHERE MaDocGia = '"+id+"'" ;
+                System.out.println(sql);
                 PreparedStatement stmt = con.prepareStatement(sql);
                 if (stmt.executeUpdate() >= 1 ){
                     result = true;
